@@ -10,6 +10,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private SensorManager sensorManager;
+    private Sensor linearAccelerationSensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,12 +18,15 @@ public class MainActivity extends AppCompatActivity {
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION) != null){
+        linearAccelerationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+
+        if (linearAccelerationSensor != null){
             // Success! There's a linear acceleration sensor.
         }
         else {
             Toast.makeText(
-                MainActivity.this, "No Accelerometer Sensor detected", Toast.LENGTH_SHORT).show();
+                MainActivity.this,
+                "No Linear Acceleration Sensor detected", Toast.LENGTH_SHORT).show();
         }
 
         setContentView(R.layout.activity_main);
