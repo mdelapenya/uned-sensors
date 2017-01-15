@@ -21,6 +21,12 @@ public class RangeDAO implements Closeable {
 
     public RangeDAO(Context context) {
         dbHelper = new RangeDBHelper(context);
+
+        open();
+
+        if (!initialized && getAllRanges().isEmpty()) {
+            initData();
+        }
     }
 
     @Override
@@ -113,6 +119,20 @@ public class RangeDAO implements Closeable {
 
         return new Range(id, max, min, name);
     }
+
+    private void initData() {
+        createRange(1, 0, "status_stopped");
+        createRange(4, 1, "status_walking");
+        createRange(6, 4, "status_marching");
+        createRange(12, 6, "status_running");
+        createRange(25, 12, "status_sprinting");
+        createRange(170, 25, "status_terrain_motor_vehicle");
+        createRange(Integer.MAX_VALUE, 170, "status_aerial_motor_vehicle");
+
+        initialized = true;
+    }
+
+    private static boolean initialized = false;
 
     private String[] allColumns = {
         RangeDBHelper.Range._ID,
