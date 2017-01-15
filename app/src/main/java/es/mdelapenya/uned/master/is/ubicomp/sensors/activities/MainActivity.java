@@ -1,6 +1,8 @@
 package es.mdelapenya.uned.master.is.ubicomp.sensors.activities;
 
 import android.content.Context;
+import android.content.Intent;
+
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import android.widget.Toast;
 
@@ -48,6 +51,35 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.sensors_menu, menu);
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sensors_config:
+                showConfiguration();
+
+                return true;
+            case R.id.sensors_help:
+                showHelp();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showConfiguration() {
+        Intent intent = new Intent(MainActivity.this, RangesActivity.class);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        getApplicationContext().startActivity(intent);
+    }
+
+    private void showHelp() {
+        Toast.makeText(
+            MainActivity.this, "Help! I need somebody! Help!", Toast.LENGTH_SHORT).show();
     }
 
 }
