@@ -1,4 +1,4 @@
-package es.mdelapenya.uned.master.is.ubicomp.sensors;
+package es.mdelapenya.uned.master.is.ubicomp.sensors.activities;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import android.widget.Toast;
+
+import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
 
 /**
  * @author Manuel de la Peña
