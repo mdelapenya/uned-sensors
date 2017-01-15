@@ -5,6 +5,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import android.view.Menu;
+import android.view.MenuInflater;
+
 import android.widget.Toast;
 
 /**
@@ -33,6 +37,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.sensors_menu, menu);
+
+        return true;
     }
 
 }
