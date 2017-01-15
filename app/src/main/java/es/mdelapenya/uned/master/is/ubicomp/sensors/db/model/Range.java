@@ -51,4 +51,15 @@ public class Range implements Serializable {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        String strMax = String.valueOf(max);
+
+        if (max == Integer.MAX_VALUE) {
+            strMax = "MAX";
+        }
+
+        return "(" + id + ") " + name + ": " + min + " > " + strMax;
+    }
+
 }
