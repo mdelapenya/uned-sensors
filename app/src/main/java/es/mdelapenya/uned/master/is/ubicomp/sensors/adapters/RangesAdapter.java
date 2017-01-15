@@ -30,6 +30,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.db.RangeDAO;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.db.model.Range;
 
 /**
@@ -62,6 +63,24 @@ public class RangesAdapter extends RecyclerView.Adapter<RangesAdapter.RangeViewH
     @Override
     public int getItemCount() {
         return ranges.size();
+    }
+
+    public void remove(int position) {
+        try(RangeDAO rangeDAO = new RangeDAO(context)) {
+            rangeDAO.open();
+
+            Range range = ranges.get(position);
+
+            rangeDAO.deleteRange(range);
+
+            ranges.remove(position);
+
+            notifyItemRemoved(position);
+
+            Toast.makeText(
+                context, context.getString(R.string.range_deleted_ok), Toast.LENGTH_SHORT)
+            .show();
+        }
     }
 
     public class RangeViewHolder extends RecyclerView.ViewHolder {

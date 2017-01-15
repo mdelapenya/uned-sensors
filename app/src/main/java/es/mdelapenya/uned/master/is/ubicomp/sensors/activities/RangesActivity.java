@@ -9,11 +9,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import java.util.List;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.adapters.DismissRangesTouchHelper;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.adapters.RangesAdapter;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.db.RangeDAO;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.db.model.Range;
@@ -57,10 +59,20 @@ public class RangesActivity extends AppCompatActivity {
 
             RangesAdapter rangesAdapter = new RangesAdapter(ranges);
 
+            setUpDismissFavoritesTouchGesture(rangesAdapter);
+
             recyclerView.setAdapter(rangesAdapter);
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setUpDismissFavoritesTouchGesture(RangesAdapter rangesAdapter) {
+        ItemTouchHelper.Callback callback = new DismissRangesTouchHelper(rangesAdapter);
+
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+
+        helper.attachToRecyclerView(recyclerView);
     }
 
 }
