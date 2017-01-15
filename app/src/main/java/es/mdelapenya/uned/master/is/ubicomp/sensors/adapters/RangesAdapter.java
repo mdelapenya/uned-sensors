@@ -1,0 +1,119 @@
+/**
+ *    Copyright 2016-today Manuel de la Peña
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package es.mdelapenya.uned.master.is.ubicomp.sensors.adapters;
+
+import android.content.Context;
+
+import android.support.v7.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
+
+import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.db.model.Range;
+
+/**
+ * @author Manuel de la Peña
+ */
+public class RangesAdapter extends RecyclerView.Adapter<RangesAdapter.RangeViewHolder> {
+
+    private final List<Range> ranges;
+
+    private Context context;
+
+    public RangesAdapter(List<Range> ranges) {
+        this.ranges = ranges;
+    }
+
+    @Override
+    public RangeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
+
+        View view = LayoutInflater.from(context).inflate(R.layout.range_row, parent, false);
+
+        return new RangeViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(RangeViewHolder holder, int position) {
+        holder.bind(ranges.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return ranges.size();
+    }
+
+    public class RangeViewHolder extends RecyclerView.ViewHolder {
+
+        private Range currentRange;
+        private TextView rangeId;
+        private String rangeIdText;
+        private TextView rangeMax;
+        private TextView rangeMin;
+        private TextView rangeName;
+
+        public RangeViewHolder(View itemView) {
+            super(itemView);
+
+            rangeId = (TextView) itemView.findViewById(R.id.rangeId);
+            rangeMax = (TextView) itemView.findViewById(R.id.rangeMax);
+            rangeMin = (TextView) itemView.findViewById(R.id.rangeMin);
+            rangeName = (TextView) itemView.findViewById(R.id.rangeName);
+
+            View.OnClickListener rangeClickListener = new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, currentRange.toString(), Toast.LENGTH_SHORT).show();
+                }
+
+            };
+
+            rangeId.setOnClickListener(rangeClickListener);
+            rangeMax.setOnClickListener(rangeClickListener);
+            rangeMin.setOnClickListener(rangeClickListener);
+            rangeName.setOnClickListener(rangeClickListener);
+        }
+
+        public void bind(Range range) {
+            currentRange = range;
+
+            rangeIdText = String.valueOf(range.getId());
+
+            rangeId.setText(rangeIdText);
+            rangeMax.setText(String.valueOf(range.getMax()));
+            rangeMin.setText(String.valueOf(range.getMin()));
+            rangeName.setText(getStringResourceByName(range.getName()));
+        }
+
+        private String getStringResourceByName(String name) {
+            String packageName = "es.mdelapenya.uned.master.is.ubicomp.sensors";
+
+            int resourceId = context.getResources().getIdentifier(name, "string", packageName);
+
+            return context.getString(resourceId);
+        }
+    }
+
+}
