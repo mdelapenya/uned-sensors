@@ -72,6 +72,10 @@ public class Range implements Comparable<Range>, Serializable {
         return min;
     }
 
+    public boolean isInRange(float speed) {
+        return (speed >= getMin() && speed <= getMax());
+    }
+
     public void setId(long id) {
         this.id = id;
     }

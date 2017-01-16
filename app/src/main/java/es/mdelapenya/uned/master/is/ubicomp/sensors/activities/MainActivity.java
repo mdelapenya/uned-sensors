@@ -139,7 +139,7 @@ public class MainActivity extends BaseGeoLocatedActivity {
         int id = R.mipmap.status_walking;
 
         for (Range range : ranges) {
-            if (isInRange(currentSpeed, range)) {
+            if (range.isInRange(currentSpeed)) {
                 id = ResourceLocator.getMipmapResourceByName(this, range.getName());
 
                 break;
@@ -147,10 +147,6 @@ public class MainActivity extends BaseGeoLocatedActivity {
         }
 
         return id;
-    }
-
-    private boolean isInRange(float speed, Range range) {
-        return (speed >= range.getMin() && speed <= range.getMax());
     }
 
 }

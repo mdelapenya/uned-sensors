@@ -42,4 +42,15 @@ public class RangeTest {
         Assert.assertEquals(-1, r1.compareTo(r2));
     }
 
+    @Test
+    public void testIsInRange() {
+        Range r = new Range(1, 10, 1, "uno");
+
+        Assert.assertFalse(r.isInRange(0));
+        Assert.assertTrue(r.isInRange(1));
+        Assert.assertTrue(r.isInRange(4));
+        Assert.assertTrue(r.isInRange(10));
+        Assert.assertFalse(r.isInRange(100));
+    }
+
 }
