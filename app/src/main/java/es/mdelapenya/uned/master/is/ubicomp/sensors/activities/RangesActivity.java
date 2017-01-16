@@ -33,8 +33,9 @@ import java.util.List;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.adapters.DismissRangesTouchHelper;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.adapters.RangesAdapter;
-import es.mdelapenya.uned.master.is.ubicomp.sensors.db.RangeDAO;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.services.CRUDService;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.services.RangeService;
 
 /**
  * @author Manuel de la Peña
@@ -66,19 +67,19 @@ public class RangesActivity extends AppCompatActivity {
 
         });
 
-        try (RangeDAO rangeDAO = new RangeDAO(this)){
-            List<Range> ranges = rangeDAO.getAllRanges();
+        CRUDService rangeService = new RangeService(this);
 
-            recyclerView = (RecyclerView) findViewById(R.id.rangesList);
+        List<Range> ranges = rangeService.list();
 
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = (RecyclerView) findViewById(R.id.rangesList);
 
-            RangesAdapter rangesAdapter = new RangesAdapter(ranges);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-            setUpDismissFavoritesTouchGesture(rangesAdapter);
+        RangesAdapter rangesAdapter = new RangesAdapter(ranges);
 
-            recyclerView.setAdapter(rangesAdapter);
-        }
+        setUpDismissFavoritesTouchGesture(rangesAdapter);
+
+        recyclerView.setAdapter(rangesAdapter);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
