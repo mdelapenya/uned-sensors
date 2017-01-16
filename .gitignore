@@ -43,6 +43,7 @@ projectFilesBackup/
 .idea/tasks.xml
 .idea/gradle.xml
 .idea/libraries
+.idea/markdown-navigator
 
 # Keystore files
 *.jks
