@@ -96,7 +96,7 @@ public class MainActivity extends BaseGeoLocatedActivity {
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);
 
-        currentSpeed.setText(String.valueOf(getSpeed()));
+        updateUI();
     }
 
     private void showConfiguration() {
@@ -110,6 +110,12 @@ public class MainActivity extends BaseGeoLocatedActivity {
     private void showHelp() {
         Toast.makeText(
             MainActivity.this, "Help! I need somebody! Help!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateUI() {
+        float speed = getSpeed();
+
+        currentSpeed.setText(String.valueOf(speed));
     }
 
 }
