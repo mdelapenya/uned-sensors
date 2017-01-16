@@ -28,7 +28,7 @@ import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.mdelapenya.uned.master.is.ubicomp.sensors.db.model.Range;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 
 /**
  * @author Manuel de la Peña

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package es.mdelapenya.uned.master.is.ubicomp.sensors.db.model;
+package es.mdelapenya.uned.master.is.ubicomp.sensors.model;
 
 import java.io.Serializable;
 

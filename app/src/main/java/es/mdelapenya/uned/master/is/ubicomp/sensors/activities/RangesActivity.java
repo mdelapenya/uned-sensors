@@ -34,7 +34,7 @@ import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.adapters.DismissRangesTouchHelper;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.adapters.RangesAdapter;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.db.RangeDAO;
-import es.mdelapenya.uned.master.is.ubicomp.sensors.db.model.Range;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 
 /**
  * @author Manuel de la Peña
