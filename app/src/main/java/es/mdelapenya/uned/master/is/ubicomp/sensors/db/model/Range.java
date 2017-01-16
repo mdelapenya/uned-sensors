@@ -69,13 +69,17 @@ public class Range implements Serializable {
 
     @Override
     public String toString() {
+        return toString("km");
+    }
+
+    public String toString(String units) {
         String strMax = String.valueOf(max);
 
         if (max == Integer.MAX_VALUE) {
             strMax = "MAX";
         }
 
-        return "(" + id + ") " + name + ": " + min + " > " + strMax;
+        return min + " " + units + " > " + strMax + " " + units;
     }
 
 }
