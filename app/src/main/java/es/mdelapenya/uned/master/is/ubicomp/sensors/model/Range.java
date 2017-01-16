@@ -21,7 +21,7 @@ import java.io.Serializable;
 /**
  * @author Manuel de la Peña
  */
-public class Range implements Serializable {
+public class Range implements Comparable<Range>, Serializable {
 
     private long id;
     private int max;
@@ -33,6 +33,27 @@ public class Range implements Serializable {
         this.max = max;
         this.min = min;
         this.name = name;
+    }
+
+    @Override
+    public int compareTo(Range that) {
+        if (this.min < that.min) {
+            return -1;
+        }
+        else if (this.min > that.min) {
+            return 1;
+        }
+        else {
+            if (this.max < that.max) {
+                return -1;
+            }
+            else if (this.max > that.max) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }
     }
 
     public long getId() {
