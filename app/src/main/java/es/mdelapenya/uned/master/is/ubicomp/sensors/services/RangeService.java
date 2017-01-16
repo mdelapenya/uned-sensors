@@ -20,7 +20,7 @@ import android.content.Context;
 
 import java.util.List;
 
-import es.mdelapenya.uned.master.is.ubicomp.sensors.db.RangeDAO;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db.RangeDAO;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 
 /**

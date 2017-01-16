@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package es.mdelapenya.uned.master.is.ubicomp.sensors.db;
+package es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db;
 
 import android.content.Context;
 
