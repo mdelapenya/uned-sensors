@@ -41,6 +41,7 @@ import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.activities.location.BaseGeoLocatedActivity;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.services.RangeService;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.util.ResourceLocator;
 
 /**
  * @author Manuel de la Peña
@@ -139,7 +140,7 @@ public class MainActivity extends BaseGeoLocatedActivity {
 
         for (Range range : ranges) {
             if (isInRange(currentSpeed, range)) {
-                id = getMipmapResourceByName(range.getName());
+                id = ResourceLocator.getMipmapResourceByName(this, range.getName());
 
                 break;
             }
@@ -150,12 +151,6 @@ public class MainActivity extends BaseGeoLocatedActivity {
 
     private boolean isInRange(float speed, Range range) {
         return (speed >= range.getMin() && speed <= range.getMax());
-    }
-
-    private int getMipmapResourceByName(String name) {
-        String packageName = "es.mdelapenya.uned.master.is.ubicomp.sensors";
-
-        return getResources().getIdentifier(name, "mipmap", packageName);
     }
 
 }

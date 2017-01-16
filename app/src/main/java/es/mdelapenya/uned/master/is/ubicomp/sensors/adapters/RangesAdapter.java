@@ -33,6 +33,7 @@ import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.services.CRUDService;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.services.RangeService;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.util.ResourceLocator;
 
 /**
  * @author Manuel de la Peña
@@ -117,17 +118,12 @@ public class RangesAdapter extends RecyclerView.Adapter<RangesAdapter.RangeViewH
             rangeIdText = String.valueOf(range.getId());
 
             rangeId.setText("(" + rangeIdText + ")");
-            rangeName.setText(getStringResourceByName(range.getName()));
+            rangeName.setText(
+                context.getString(
+                    ResourceLocator.getStringResourceByName(context, range.getName())));
             rangeValues.setText(String.valueOf(range.toString()));
         }
 
-        private String getStringResourceByName(String name) {
-            String packageName = "es.mdelapenya.uned.master.is.ubicomp.sensors";
-
-            int resourceId = context.getResources().getIdentifier(name, "string", packageName);
-
-            return context.getString(resourceId);
-        }
     }
 
 }
