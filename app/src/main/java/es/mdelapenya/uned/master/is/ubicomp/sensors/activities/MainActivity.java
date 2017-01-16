@@ -22,22 +22,26 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 
-import android.support.v7.app.AppCompatActivity;
+import android.location.Location;
+
 import android.os.Bundle;
 
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.activities.location.BaseGeoLocatedActivity;
 
 /**
  * @author Manuel de la Peña
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseGeoLocatedActivity {
 
+    private TextView currentSpeed;
     private SensorManager sensorManager;
     private Sensor linearAccelerationSensor;
 
@@ -59,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this,
                 "No Linear Acceleration Sensor detected", Toast.LENGTH_SHORT).show();
         }
+
+        currentSpeed = (TextView) findViewById(R.id.current_speed);
     }
 
     @Override
@@ -84,6 +90,13 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        super.onLocationChanged(location);
+
+        currentSpeed.setText(String.valueOf(getSpeed()));
     }
 
     private void showConfiguration() {

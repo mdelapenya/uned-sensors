@@ -10,7 +10,8 @@
     tools:context="es.mdelapenya.uned.master.is.ubicomp.sensors.activities.MainActivity">
 
     <TextView
+        android:id="@+id/current_speed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Current Speed" />
 </RelativeLayout>
