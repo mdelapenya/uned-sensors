@@ -21,6 +21,7 @@ import android.content.Intent;
 
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_main);
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         linearAccelerationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
@@ -56,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this,
                 "No Linear Acceleration Sensor detected", Toast.LENGTH_SHORT).show();
         }
-
-        setContentView(R.layout.activity_main);
     }
 
     @Override
