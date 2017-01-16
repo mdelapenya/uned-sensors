@@ -13,7 +13,7 @@
         android:id="@+id/current_speed_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@mipmap/walking" />
+        android:src="@mipmap/status_stopped" />
 
     <TextView
         android:id="@+id/current_speed"
