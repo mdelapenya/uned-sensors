@@ -30,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ import es.mdelapenya.uned.master.is.ubicomp.sensors.activities.location.BaseGeoL
 public class MainActivity extends BaseGeoLocatedActivity {
 
     private TextView currentSpeed;
+    private ImageView currentSpeedImage;
     private SensorManager sensorManager;
     private Sensor linearAccelerationSensor;
 
@@ -65,6 +67,7 @@ public class MainActivity extends BaseGeoLocatedActivity {
         }
 
         currentSpeed = (TextView) findViewById(R.id.current_speed);
+        currentSpeedImage = (ImageView) findViewById(R.id.current_speed_image);
     }
 
     @Override
@@ -116,6 +119,7 @@ public class MainActivity extends BaseGeoLocatedActivity {
         float speed = getSpeed();
 
         currentSpeed.setText(String.valueOf(speed));
+        currentSpeedImage.setImageDrawable(getDrawable(R.mipmap.walking));
     }
 
 }

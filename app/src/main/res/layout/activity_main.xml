@@ -9,9 +9,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.mdelapenya.uned.master.is.ubicomp.sensors.activities.MainActivity">
 
+    <ImageView
+        android:id="@+id/current_speed_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/walking" />
+
     <TextView
         android:id="@+id/current_speed"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/speed_size"
+        android:textAlignment="center"
+        android:layout_below="@+id/current_speed_image"
         android:layout_height="wrap_content"
         android:text="Current Speed" />
 </RelativeLayout>
