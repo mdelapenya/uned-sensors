@@ -34,8 +34,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Collections;
+import java.util.List;
+
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.activities.location.BaseGeoLocatedActivity;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.services.RangeService;
 
 /**
  * @author Manuel de la Peña
@@ -46,6 +51,7 @@ public class MainActivity extends BaseGeoLocatedActivity {
     private ImageView currentSpeedImage;
     private SensorManager sensorManager;
     private Sensor linearAccelerationSensor;
+    private List<Range> ranges;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,12 @@ public class MainActivity extends BaseGeoLocatedActivity {
 
         currentSpeed = (TextView) findViewById(R.id.current_speed);
         currentSpeedImage = (ImageView) findViewById(R.id.current_speed_image);
+
+        RangeService rangeService = new RangeService(this);
+
+        ranges = rangeService.list();
+
+        Collections.sort(ranges);
     }
 
     @Override
@@ -119,7 +131,31 @@ public class MainActivity extends BaseGeoLocatedActivity {
         float speed = getSpeed();
 
         currentSpeed.setText(String.valueOf(speed));
-        currentSpeedImage.setImageDrawable(getDrawable(R.mipmap.walking));
+        currentSpeedImage.setImageDrawable(getDrawable(getRangeImage(speed)));
+    }
+
+    private int getRangeImage(float currentSpeed) {
+        int id = R.mipmap.status_walking;
+
+        for (Range range : ranges) {
+            if (isInRange(currentSpeed, range)) {
+                id = getMipmapResourceByName(range.getName());
+
+                break;
+            }
+        }
+
+        return id;
+    }
+
+    private boolean isInRange(float speed, Range range) {
+        return (speed >= range.getMin() && speed <= range.getMax());
+    }
+
+    private int getMipmapResourceByName(String name) {
+        String packageName = "es.mdelapenya.uned.master.is.ubicomp.sensors";
+
+        return getResources().getIdentifier(name, "mipmap", packageName);
     }
 
 }
