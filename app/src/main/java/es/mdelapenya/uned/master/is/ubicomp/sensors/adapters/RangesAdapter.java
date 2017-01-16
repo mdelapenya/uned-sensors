@@ -88,17 +88,15 @@ public class RangesAdapter extends RecyclerView.Adapter<RangesAdapter.RangeViewH
         private Range currentRange;
         private TextView rangeId;
         private String rangeIdText;
-        private TextView rangeMax;
-        private TextView rangeMin;
+        private TextView rangeValues;
         private TextView rangeName;
 
         public RangeViewHolder(View itemView) {
             super(itemView);
 
             rangeId = (TextView) itemView.findViewById(R.id.rangeId);
-            rangeMax = (TextView) itemView.findViewById(R.id.rangeMax);
-            rangeMin = (TextView) itemView.findViewById(R.id.rangeMin);
             rangeName = (TextView) itemView.findViewById(R.id.rangeName);
+            rangeValues = (TextView) itemView.findViewById(R.id.rangeValues);
 
             View.OnClickListener rangeClickListener = new View.OnClickListener() {
 
@@ -110,9 +108,8 @@ public class RangesAdapter extends RecyclerView.Adapter<RangesAdapter.RangeViewH
             };
 
             rangeId.setOnClickListener(rangeClickListener);
-            rangeMax.setOnClickListener(rangeClickListener);
-            rangeMin.setOnClickListener(rangeClickListener);
             rangeName.setOnClickListener(rangeClickListener);
+            rangeValues.setOnClickListener(rangeClickListener);
         }
 
         public void bind(Range range) {
@@ -120,10 +117,9 @@ public class RangesAdapter extends RecyclerView.Adapter<RangesAdapter.RangeViewH
 
             rangeIdText = String.valueOf(range.getId());
 
-            rangeId.setText(rangeIdText);
-            rangeMax.setText(String.valueOf(range.getMax()));
-            rangeMin.setText(String.valueOf(range.getMin()));
+            rangeId.setText("(" + rangeIdText + ")");
             rangeName.setText(getStringResourceByName(range.getName()));
+            rangeValues.setText(String.valueOf(range.toString()));
         }
 
         private String getStringResourceByName(String name) {

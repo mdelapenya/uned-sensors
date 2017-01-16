@@ -19,34 +19,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="4dp"
+            android:paddingRight="4dp"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/rangeName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/rangeId"
             android:gravity="left"
+            android:paddingBottom="4dp"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/rangeMin"
-            android:layout_width="match_parent"
+            android:id="@+id/rangeValues"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/rangeName"
-            android:layout_below="@+id/rangeName"
-            android:gravity="left"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/rangeMax"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/rangeMin"
-            android:layout_below="@+id/rangeName"
+            android:layout_below="@+id/rangeId"
             android:gravity="left"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
