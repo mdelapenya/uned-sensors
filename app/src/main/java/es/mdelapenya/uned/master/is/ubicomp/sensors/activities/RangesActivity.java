@@ -33,9 +33,9 @@ import java.util.List;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.adapters.DismissRangesTouchHelper;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.adapters.RangesAdapter;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services.RangeService;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.services.CRUDService;
-import es.mdelapenya.uned.master.is.ubicomp.sensors.services.RangeService;
 
 /**
  * @author Manuel de la Peña

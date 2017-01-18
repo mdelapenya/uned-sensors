@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package es.mdelapenya.uned.master.is.ubicomp.sensors.services;
+package es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services;
 
 import android.content.Context;
 
@@ -22,6 +22,7 @@ import java.util.List;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db.RangeDAO;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.services.CRUDService;
 
 /**
  * @author Manuel de la Peña

@@ -30,9 +30,9 @@ import android.widget.Toast;
 import java.util.List;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services.RangeService;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.services.CRUDService;
-import es.mdelapenya.uned.master.is.ubicomp.sensors.services.RangeService;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.util.ResourceLocator;
 
 /**
