@@ -44,6 +44,7 @@ import es.mdelapenya.uned.master.is.ubicomp.sensors.activities.location.BaseGeoL
 import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services.RangeService;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.util.ResourceLocator;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.util.UIManager;
 
 /**
  * @author Manuel de la Peña
@@ -73,10 +74,9 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
 
         linearAccelerationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
 
-        if (linearAccelerationSensor != null){
+        if (linearAccelerationSensor != null) {
             // Success! There's a linear acceleration sensor.
-        }
-        else {
+        } else {
             Toast.makeText(
                 MainActivity.this,
                 "No Linear Acceleration Sensor detected", Toast.LENGTH_SHORT).show();
@@ -157,21 +157,13 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
             MainActivity.this, "Help! I need somebody! Help!", Toast.LENGTH_SHORT).show();
     }
 
-    private boolean syncUIRequired(String speedValue, int id) {
-        if (speedValue.equalsIgnoreCase(oldSpeedValue) && id == oldSpeedImageId) {
-            return false;
-        }
-
-        return true;
-    }
-
     private void updateUI() {
         float speed = getSpeed();
 
         int id = getRangeImage(speed);
         String speedValue = String.valueOf(speed);
 
-        if (!syncUIRequired(speedValue, id)) {
+        if (!UIManager.syncUIRequired(speedValue, oldSpeedValue, id, oldSpeedImageId)) {
             return;
         }
 
