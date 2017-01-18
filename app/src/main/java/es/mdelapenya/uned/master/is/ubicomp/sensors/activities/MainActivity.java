@@ -20,6 +20,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 import android.location.Location;
@@ -46,13 +48,18 @@ import es.mdelapenya.uned.master.is.ubicomp.sensors.util.ResourceLocator;
 /**
  * @author Manuel de la Peña
  */
-public class MainActivity extends BaseGeoLocatedActivity {
+public class MainActivity extends BaseGeoLocatedActivity implements SensorEventListener {
 
     private TextView currentSpeed;
     private ImageView currentSpeedImage;
     private SensorManager sensorManager;
     private Sensor linearAccelerationSensor;
     private List<Range> ranges;
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        updateUI();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +119,26 @@ public class MainActivity extends BaseGeoLocatedActivity {
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);
 
+        updateUI();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        sensorManager.unregisterListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        sensorManager.registerListener(
+            this, linearAccelerationSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
         updateUI();
     }
 
