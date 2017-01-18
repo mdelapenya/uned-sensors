@@ -52,6 +52,8 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
 
     private TextView currentSpeed;
     private ImageView currentSpeedImage;
+    private String oldSpeedValue = "0.00";
+    private int oldSpeedImageId = 0;
     private SensorManager sensorManager;
     private Sensor linearAccelerationSensor;
     private List<Range> ranges;
@@ -155,11 +157,29 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
             MainActivity.this, "Help! I need somebody! Help!", Toast.LENGTH_SHORT).show();
     }
 
+    private boolean syncUIRequired(String speedValue, int id) {
+        if (speedValue.equalsIgnoreCase(oldSpeedValue) && id == oldSpeedImageId) {
+            return false;
+        }
+
+        return true;
+    }
+
     private void updateUI() {
         float speed = getSpeed();
 
-        currentSpeed.setText(String.valueOf(speed));
-        currentSpeedImage.setImageDrawable(getDrawable(getRangeImage(speed)));
+        int id = getRangeImage(speed);
+        String speedValue = String.valueOf(speed);
+
+        if (!syncUIRequired(speedValue, id)) {
+            return;
+        }
+
+        currentSpeed.setText(speedValue);
+        currentSpeedImage.setImageDrawable(getDrawable(id));
+
+        oldSpeedValue = speedValue;
+        oldSpeedImageId = id;
     }
 
     private int getRangeImage(float currentSpeed) {
