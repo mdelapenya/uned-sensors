@@ -134,10 +134,7 @@ public class BaseGeoLocatedActivity extends AppCompatActivity
     }
 
     private void checkRuntimePermission(String permission) {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
 
                 // Show an expanation to the user *asynchronously* -- don't block
