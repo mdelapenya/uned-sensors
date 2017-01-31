@@ -44,6 +44,7 @@ import es.mdelapenya.uned.master.is.ubicomp.sensors.activities.location.BaseGeoL
 import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services.RangeService;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.util.ResourceLocator;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.util.SpeedConverter;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.util.UIManager;
 
 /**
@@ -158,10 +159,10 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
     }
 
     private void updateUI() {
-        float speed = getSpeed();
+        float speedKm = SpeedConverter.convertToKmsh(getSpeed());
 
-        int id = getRangeImage(speed);
-        String speedValue = String.valueOf(speed);
+        int id = getRangeImage(speedKm);
+        String speedValue = String.valueOf(speedKm);
 
         if (!UIManager.syncUIRequired(speedValue, oldSpeedValue, id, oldSpeedImageId)) {
             return;
