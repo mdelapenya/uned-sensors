@@ -32,7 +32,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,9 +52,9 @@ import es.mdelapenya.uned.master.is.ubicomp.sensors.util.UIManager;
 public class MainActivity extends BaseGeoLocatedActivity implements SensorEventListener {
 
     private TextView currentSpeed;
-    private ImageView currentSpeedImage;
+    private TextView currentSpeedText;
     private String oldSpeedValue = "0.00";
-    private int oldSpeedImageId = 0;
+    private int oldSpeedTextId = 0;
     private SensorManager sensorManager;
     private Sensor linearAccelerationSensor;
     private List<Range> ranges;
@@ -84,7 +83,7 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
         }
 
         currentSpeed = (TextView) findViewById(R.id.current_speed);
-        currentSpeedImage = (ImageView) findViewById(R.id.current_speed_image);
+        currentSpeedText = (TextView) findViewById(R.id.current_speed_text);
 
         RangeService rangeService = new RangeService(this);
 
@@ -161,26 +160,26 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
     private void updateUI() {
         float speedKm = SpeedConverter.convertToKmsh(getSpeed());
 
-        int id = getRangeImage(speedKm);
+        int id = getRangeId(speedKm);
         String speedValue = String.valueOf(speedKm);
 
-        if (!UIManager.syncUIRequired(speedValue, oldSpeedValue, id, oldSpeedImageId)) {
+        if (!UIManager.syncUIRequired(speedValue, oldSpeedValue, id, oldSpeedTextId)) {
             return;
         }
 
         currentSpeed.setText(speedValue);
-        currentSpeedImage.setImageDrawable(getDrawable(id));
+        currentSpeedText.setText(this.getString(id));
 
         oldSpeedValue = speedValue;
-        oldSpeedImageId = id;
+        oldSpeedTextId = id;
     }
 
-    private int getRangeImage(float currentSpeed) {
-        int id = R.mipmap.status_walking;
+    private int getRangeId(float currentSpeed) {
+        int id = R.string.status_walking;
 
         for (Range range : ranges) {
             if (range.isInRange(currentSpeed)) {
-                id = ResourceLocator.getMipmapResourceByName(this, range.getName());
+                id = ResourceLocator.getStringResourceByName(this, range.getName());
 
                 break;
             }

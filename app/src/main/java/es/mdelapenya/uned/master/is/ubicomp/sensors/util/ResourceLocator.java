@@ -25,10 +25,6 @@ public class ResourceLocator {
 
     public static final String BASE_PACKAGE = "es.mdelapenya.uned.master.is.ubicomp.sensors";
 
-    public static int getMipmapResourceByName(Context context, String name) {
-        return getResourceByName(context, name, "mipmap");
-    }
-
     public static int getStringResourceByName(Context context, String name) {
         return getResourceByName(context, name, "string");
     }
