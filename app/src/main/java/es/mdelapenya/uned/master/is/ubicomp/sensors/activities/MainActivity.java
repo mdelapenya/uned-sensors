@@ -54,7 +54,7 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
     private TextView currentSpeed;
     private TextView currentSpeedText;
     private String oldSpeedValue = "0.00";
-    private int oldSpeedTextId = 0;
+    private int oldSpeedTextResourceId = 0;
     private SensorManager sensorManager;
     private Sensor linearAccelerationSensor;
     private List<Range> ranges;
@@ -160,10 +160,10 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
     private void updateUI() {
         float speedKm = SpeedConverter.convertToKmsh(getSpeed());
 
-        int id = getRangeId(speedKm);
+        int id = getResourceId(speedKm);
         String speedValue = String.valueOf(speedKm);
 
-        if (!UIManager.syncUIRequired(speedValue, oldSpeedValue, id, oldSpeedTextId)) {
+        if (!UIManager.syncUIRequired(speedValue, oldSpeedValue, id, oldSpeedTextResourceId)) {
             return;
         }
 
@@ -171,21 +171,19 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
         currentSpeedText.setText(this.getString(id));
 
         oldSpeedValue = speedValue;
-        oldSpeedTextId = id;
+        oldSpeedTextResourceId = id;
     }
 
-    private int getRangeId(float currentSpeed) {
-        int id = R.string.status_walking;
+    private int getResourceId(float currentSpeed) {
+        int resourceId = R.string.status_stopped;
 
         for (Range range : ranges) {
             if (range.isInRange(currentSpeed)) {
-                id = ResourceLocator.getStringResourceByName(this, range.getName());
-
-                break;
+                return ResourceLocator.getStringResourceByName(this, range.getName());
             }
         }
 
-        return id;
+        return resourceId;
     }
 
 }
