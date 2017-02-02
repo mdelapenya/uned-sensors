@@ -145,7 +145,7 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
     }
 
     private void showConfiguration() {
-        Intent intent = new Intent(MainActivity.this, RangesActivity.class);
+        Intent intent = new Intent(this, RangeListActivity.class);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

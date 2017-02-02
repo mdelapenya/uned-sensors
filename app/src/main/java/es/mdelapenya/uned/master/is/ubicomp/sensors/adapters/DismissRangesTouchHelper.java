@@ -19,14 +19,16 @@ package es.mdelapenya.uned.master.is.ubicomp.sensors.adapters;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
+import es.mdelapenya.uned.master.is.ubicomp.sensors.activities.RangeListActivity;
+
 /**
  * @author Manuel de la Peña
  */
 public class DismissRangesTouchHelper extends ItemTouchHelper.SimpleCallback {
 
-    private RangesAdapter rangesAdapter;
+    private RangeListActivity.RangesAdapter rangesAdapter;
 
-    public DismissRangesTouchHelper(RangesAdapter rangesAdapter) {
+    public DismissRangesTouchHelper(RangeListActivity.RangesAdapter rangesAdapter) {
         super(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
 
         this.rangesAdapter = rangesAdapter;

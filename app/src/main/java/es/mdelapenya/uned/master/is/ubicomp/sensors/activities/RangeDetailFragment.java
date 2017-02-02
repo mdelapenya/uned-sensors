@@ -14,13 +14,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
-import es.mdelapenya.uned.master.is.ubicomp.sensors.activities.dummy.DummyContent;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db.RangeDAO;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.util.ResourceLocator;
 
 /**
  * A fragment representing a single Range detail screen.
  * This fragment is either contained in a {@link RangeListActivity}
  * in two-pane mode (on tablets) or a {@link RangeDetailActivity}
  * on handsets.
+ *
+ * @author Manuel de la Peña
  */
 public class RangeDetailFragment extends Fragment {
 
@@ -28,12 +32,17 @@ public class RangeDetailFragment extends Fragment {
      * The fragment argument representing the item ID that this fragment
      * represents.
      */
-    public static final String ARG_ITEM_ID = "item_id";
+    public static final String ARG_RANGE_ID = "range_id";
 
     /**
-     * The dummy content this fragment is presenting.
+     * The range this fragment is presenting.
      */
-    private DummyContent.DummyItem mItem;
+    private Range range;
+
+    /**
+     * The title this fragment is presenting
+     */
+    private String title;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -46,11 +55,10 @@ public class RangeDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+        if (getArguments().containsKey(ARG_RANGE_ID)) {
+            long rangeId = getArguments().getLong(ARG_RANGE_ID);
+
+            range = new RangeDAO(getContext()).getRange(rangeId);
 
             Activity activity = this.getActivity();
 
@@ -58,7 +66,10 @@ public class RangeDetailFragment extends Fragment {
                 (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
 
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.content);
+                title = getContext().getString(
+                    ResourceLocator.getStringResourceByName(getContext(), range.getName()));
+
+                appBarLayout.setTitle(title);
             }
         }
     }
@@ -69,9 +80,8 @@ public class RangeDetailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.range_detail, container, false);
 
-        // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.range_detail)).setText(mItem.details);
+        if (range != null) {
+            ((TextView) rootView.findViewById(R.id.range_detail)).setText(range.toString());
         }
 
         return rootView;

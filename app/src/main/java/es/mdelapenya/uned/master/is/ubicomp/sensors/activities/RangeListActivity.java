@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -20,9 +21,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
-import es.mdelapenya.uned.master.is.ubicomp.sensors.activities.dummy.DummyContent;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.adapters.DismissRangesTouchHelper;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db.RangeDAO;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services.RangeService;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.services.CRUDService;
 
 import java.util.List;
 
@@ -33,6 +39,8 @@ import java.util.List;
  * lead to a {@link RangeDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
+ *
+ * @author Manuel de la Peña
  */
 public class RangeListActivity extends AppCompatActivity {
 
@@ -108,31 +116,49 @@ public class RangeListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(DummyContent.ITEMS));
+        List<Range> ranges = new RangeDAO(this).getAllRanges();
+
+        RangesAdapter adapter = new RangesAdapter(ranges);
+
+        recyclerView.setAdapter(adapter);
+
+        setUpDismissFavoritesTouchGesture(adapter, recyclerView);
     }
 
-    public class SimpleItemRecyclerViewAdapter
-        extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+    private void setUpDismissFavoritesTouchGesture(
+        RangesAdapter rangesAdapter, RecyclerView recyclerView) {
 
-        private final List<DummyContent.DummyItem> mValues;
+        ItemTouchHelper.Callback callback = new DismissRangesTouchHelper(rangesAdapter);
 
-        public SimpleItemRecyclerViewAdapter(List<DummyContent.DummyItem> items) {
-            mValues = items;
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+
+        helper.attachToRecyclerView(recyclerView);
+    }
+
+    public class RangesAdapter extends RecyclerView.Adapter<RangesAdapter.RangeViewHolder> {
+
+        private Context context;
+        private final List<Range> ranges;
+
+        public RangesAdapter(List<Range> ranges) {
+            this.ranges = ranges;
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
+        public RangeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            context = parent.getContext();
+
+            View view = LayoutInflater.from(context)
                 .inflate(R.layout.range_list_content, parent, false);
 
-            return new ViewHolder(view);
+            return new RangeViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+        public void onBindViewHolder(final RangeViewHolder holder, int position) {
+            holder.range = ranges.get(position);
+            holder.mIdView.setText(String.valueOf(holder.range.getId()));
+            holder.mContentView.setText(holder.range.toString());
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
 
@@ -140,16 +166,23 @@ public class RangeListActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(RangeDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+
+                        arguments.putLong(RangeDetailFragment.ARG_RANGE_ID, holder.range.getId());
+
                         RangeDetailFragment fragment = new RangeDetailFragment();
+
                         fragment.setArguments(arguments);
+
                         getSupportFragmentManager().beginTransaction()
                             .replace(R.id.range_detail_container, fragment)
                             .commit();
-                    } else {
+                    }
+                    else {
                         Context context = v.getContext();
+
                         Intent intent = new Intent(context, RangeDetailActivity.class);
-                        intent.putExtra(RangeDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+
+                        intent.putExtra(RangeDetailFragment.ARG_RANGE_ID, holder.range.getId());
 
                         context.startActivity(intent);
                     }
@@ -160,16 +193,32 @@ public class RangeListActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return mValues.size();
+            return ranges.size();
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
+        public void remove(int position) {
+            CRUDService rangeService = new RangeService(context);
+
+            Range range = ranges.get(position);
+
+            rangeService.delete(range);
+
+            ranges.remove(position);
+
+            notifyItemRemoved(position);
+
+            Toast.makeText(
+                context, context.getString(R.string.range_deleted_ok), Toast.LENGTH_SHORT)
+                .show();
+        }
+
+        public class RangeViewHolder extends RecyclerView.ViewHolder {
             public final View mView;
             public final TextView mIdView;
             public final TextView mContentView;
-            public DummyContent.DummyItem mItem;
+            public Range range;
 
-            public ViewHolder(View view) {
+            public RangeViewHolder(View view) {
                 super(view);
 
                 mView = view;

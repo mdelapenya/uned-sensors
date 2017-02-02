@@ -13,6 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.MenuItem;
 
+/**
+ * @author Manuel de la Peña
+ */
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
 
 /**
@@ -67,8 +70,9 @@ public class RangeDetailActivity extends AppCompatActivity {
 
             Bundle arguments = new Bundle();
 
-            arguments.putString(RangeDetailFragment.ARG_ITEM_ID,
-                getIntent().getStringExtra(RangeDetailFragment.ARG_ITEM_ID));
+            arguments.putLong(
+                RangeDetailFragment.ARG_RANGE_ID,
+                getIntent().getLongExtra(RangeDetailFragment.ARG_RANGE_ID, 0));
 
             RangeDetailFragment fragment = new RangeDetailFragment();
 
