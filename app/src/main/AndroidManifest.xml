@@ -27,6 +27,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="es.mdelapenya.uned.master.is.ubicomp.sensors.activities.MainActivity" />
         </activity>
+        <activity
+            android:name=".activities.RangeListActivity"
+            android:label="@string/title_range_list"
+            android:parentActivityName=".activities.RangesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.mdelapenya.uned.master.is.ubicomp.sensors.activities.RangesActivity" />
+        </activity>
+        <activity
+            android:name=".activities.RangeDetailActivity"
+            android:label="@string/title_range_detail"
+            android:parentActivityName=".activities.RangeListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.mdelapenya.uned.master.is.ubicomp.sensors.activities.RangeListActivity" />
+        </activity>
     </application>
 
 </manifest>
