@@ -56,11 +56,6 @@ public class RangeDetailFragment extends Fragment {
     private Range range;
 
     /**
-     * The title this fragment is presenting
-     */
-    private String title;
-
-    /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
@@ -75,18 +70,6 @@ public class RangeDetailFragment extends Fragment {
             long rangeId = getArguments().getLong(ARG_RANGE_ID);
 
             range = new RangeDAO(getContext()).getRange(rangeId);
-
-            Activity activity = this.getActivity();
-
-            CollapsingToolbarLayout appBarLayout =
-                (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-
-            if (appBarLayout != null) {
-                title = getContext().getString(
-                    ResourceLocator.getStringResourceByName(getContext(), range.getName()));
-
-                appBarLayout.setTitle(title);
-            }
         }
     }
 
@@ -98,6 +81,18 @@ public class RangeDetailFragment extends Fragment {
 
         if (range != null) {
             ((TextView) rootView.findViewById(R.id.range_detail)).setText(range.toString());
+        }
+
+        Activity activity = this.getActivity();
+
+        CollapsingToolbarLayout appBarLayout =
+            (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+
+        if (appBarLayout != null) {
+            String title = getContext().getString(
+                ResourceLocator.getStringResourceByName(getContext(), range.getName()));
+
+            appBarLayout.setTitle(title);
         }
 
         return rootView;
