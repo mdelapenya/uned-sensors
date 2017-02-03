@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.EditText;
 import android.widget.TextView;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
@@ -79,8 +80,27 @@ public class RangeDetailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.range_detail, container, false);
 
+        String title = "";
+
         if (range != null) {
+            title = range.getName();
+
+            int resourceByName = ResourceLocator.getStringResourceByName(
+                getContext(), range.getName());
+
+            if (resourceByName != 0) {
+                title = getContext().getString(resourceByName);
+            }
+
             ((TextView) rootView.findViewById(R.id.range_detail)).setText(range.toString());
+
+            EditText txtName = (EditText) rootView.findViewById(R.id.range_name);
+            EditText txtMin = (EditText) rootView.findViewById(R.id.range_min);
+            EditText txtMax = (EditText) rootView.findViewById(R.id.range_max);
+
+            txtName.setText(title);
+            txtMin.setText(String.valueOf(range.getMin()));
+            txtMax.setText(String.valueOf(range.getMax()));
         }
 
         Activity activity = this.getActivity();
@@ -89,9 +109,6 @@ public class RangeDetailFragment extends Fragment {
             (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
 
         if (appBarLayout != null) {
-            String title = getContext().getString(
-                ResourceLocator.getStringResourceByName(getContext(), range.getName()));
-
             appBarLayout.setTitle(title);
         }
 

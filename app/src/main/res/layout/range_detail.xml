@@ -1,9 +1,95 @@
-<TextView android:id="@+id/range_detail"
-    style="?android:attr/textAppearanceLarge"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:textIsSelectable="true"
-    tools:context="es.mdelapenya.uned.master.is.ubicomp.sensors.activities.RangeDetailFragment" />
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <TextView android:id="@+id/range_detail"
+        style="?android:attr/textAppearanceLarge"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:textIsSelectable="true"
+        tools:context="es.mdelapenya.uned.master.is.ubicomp.sensors.activities.RangeDetailFragment" />
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_name"
+        android:layout_below="@id/range_detail">
+
+        <TextView android:id="@+id/lbRangeName"
+            style="?android:attr/textAppearanceLarge"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:text="@string/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textIsSelectable="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:id="@+id/range_name"
+            android:hint="@string/app_name"
+            android:maxLines="1"
+            android:inputType="textCapWords"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_min"
+        android:layout_below="@id/row_name">
+
+        <TextView android:id="@+id/lbRangeMin"
+            style="?android:attr/textAppearanceLarge"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:text="@string/min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textIsSelectable="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:id="@+id/range_min"
+            android:hint="@string/app_name"
+            android:maxLines="1"
+            android:inputType="number"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/row_max"
+        android:layout_below="@id/row_min">
+
+        <TextView android:id="@+id/lbRangeMax"
+            style="?android:attr/textAppearanceLarge"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/max"
+            android:padding="16dp"
+            android:textIsSelectable="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:id="@+id/range_max"
+            android:layout_below="@id/range_min"
+            android:hint="@string/app_name"
+            android:maxLines="1"
+            android:inputType="number"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+</RelativeLayout>
