@@ -80,6 +80,11 @@ public class RangeDetailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.range_detail, container, false);
 
+        TextView lbDetail = (TextView) rootView.findViewById(R.id.range_detail);
+        EditText txtName = (EditText) rootView.findViewById(R.id.range_name);
+        EditText txtMin = (EditText) rootView.findViewById(R.id.range_min);
+        EditText txtMax = (EditText) rootView.findViewById(R.id.range_max);
+
         String title = "";
 
         if (range != null) {
@@ -91,11 +96,6 @@ public class RangeDetailFragment extends Fragment {
             if (resourceByName != 0) {
                 title = getContext().getString(resourceByName);
             }
-
-            TextView lbDetail = (TextView) rootView.findViewById(R.id.range_detail);
-            EditText txtName = (EditText) rootView.findViewById(R.id.range_name);
-            EditText txtMin = (EditText) rootView.findViewById(R.id.range_min);
-            EditText txtMax = (EditText) rootView.findViewById(R.id.range_max);
 
             lbDetail.setText(range.toString());
             txtName.setText(title);
