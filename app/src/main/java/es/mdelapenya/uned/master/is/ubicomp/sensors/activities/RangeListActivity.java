@@ -79,15 +79,7 @@ public class RangeListActivity extends AppCompatActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            }
-
-        });
+        fab.setOnClickListener(setClickListener(new Range()));
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -151,6 +143,38 @@ public class RangeListActivity extends AppCompatActivity {
         helper.attachToRecyclerView(recyclerView);
     }
 
+    private View.OnClickListener setClickListener(final Range range) {
+        return new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (mTwoPane) {
+                    Bundle arguments = new Bundle();
+
+                    arguments.putLong(RangeDetailFragment.ARG_RANGE_ID, range.getId());
+
+                    RangeDetailFragment fragment = new RangeDetailFragment();
+
+                    fragment.setArguments(arguments);
+
+                    getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.range_detail_container, fragment)
+                        .commit();
+                }
+                else {
+                    Context context = v.getContext();
+
+                    Intent intent = new Intent(context, RangeDetailActivity.class);
+
+                    intent.putExtra(RangeDetailFragment.ARG_RANGE_ID, range.getId());
+
+                    context.startActivity(intent);
+                }
+            }
+
+        };
+    }
+
     public class RangesAdapter extends RecyclerView.Adapter<RangesAdapter.RangeViewHolder> {
 
         private Context context;
@@ -176,35 +200,7 @@ public class RangeListActivity extends AppCompatActivity {
             holder.mIdView.setText(String.valueOf(holder.range.getId()));
             holder.mContentView.setText(holder.range.toString());
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    if (mTwoPane) {
-                        Bundle arguments = new Bundle();
-
-                        arguments.putLong(RangeDetailFragment.ARG_RANGE_ID, holder.range.getId());
-
-                        RangeDetailFragment fragment = new RangeDetailFragment();
-
-                        fragment.setArguments(arguments);
-
-                        getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.range_detail_container, fragment)
-                            .commit();
-                    }
-                    else {
-                        Context context = v.getContext();
-
-                        Intent intent = new Intent(context, RangeDetailActivity.class);
-
-                        intent.putExtra(RangeDetailFragment.ARG_RANGE_ID, holder.range.getId());
-
-                        context.startActivity(intent);
-                    }
-                }
-
-            });
+            holder.mView.setOnClickListener(setClickListener(holder.range));
         }
 
         @Override

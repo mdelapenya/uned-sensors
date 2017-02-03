@@ -37,7 +37,7 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:id="@+id/range_name"
-            android:hint="@string/app_name"
+            android:hint="@string/new_range"
             android:maxLines="1"
             android:inputType="textCapWords"/>
     </android.support.v7.widget.LinearLayoutCompat>

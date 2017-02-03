@@ -70,7 +70,12 @@ public class RangeDetailFragment extends Fragment {
         if (getArguments().containsKey(ARG_RANGE_ID)) {
             long rangeId = getArguments().getLong(ARG_RANGE_ID);
 
-            range = new RangeDAO(getContext()).getRange(rangeId);
+            if (rangeId > 0) {
+                range = new RangeDAO(getContext()).getRange(rangeId);
+            }
+            else {
+                range = new Range();
+            }
         }
     }
 
@@ -85,7 +90,7 @@ public class RangeDetailFragment extends Fragment {
         EditText txtMin = (EditText) rootView.findViewById(R.id.range_min);
         EditText txtMax = (EditText) rootView.findViewById(R.id.range_max);
 
-        String title = "";
+        String title = getContext().getString(R.string.new_range);
 
         if (range != null) {
             title = range.getName();
@@ -102,6 +107,11 @@ public class RangeDetailFragment extends Fragment {
             txtMin.setText(String.valueOf(range.getMin()));
             txtMax.setText(String.valueOf(range.getMax()));
         }
+
+        lbDetail.setText(range.toString());
+        txtName.setText(title);
+        txtMin.setText(String.valueOf(range.getMin()));
+        txtMax.setText(String.valueOf(range.getMax()));
 
         Activity activity = this.getActivity();
 

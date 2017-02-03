@@ -4,6 +4,7 @@
     <string name="max">Max</string>
     <string name="min">Min</string>
     <string name="name">Name</string>
+    <string name="new_range">Nuevo Rango</string>
     <string name="range.deleted.ok">Sensor Ranges</string>
     <string name="sensor.ranges">Sensor Ranges</string>
     <string name="status_aerial_motor_vehicle">VEH. MOTOR AÉREO</string>
