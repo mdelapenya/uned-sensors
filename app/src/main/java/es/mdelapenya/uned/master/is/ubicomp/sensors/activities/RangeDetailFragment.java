@@ -23,6 +23,9 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,12 +118,29 @@ public class RangeDetailFragment extends Fragment {
 
         Activity activity = this.getActivity();
 
-        CollapsingToolbarLayout appBarLayout =
+        final CollapsingToolbarLayout appBarLayout =
             (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
 
         if (appBarLayout != null) {
             appBarLayout.setTitle(title);
         }
+
+        txtName.addTextChangedListener(new TextWatcher() {
+
+            // the user's changes are saved here
+            public void onTextChanged(CharSequence c, int start, int before, int count) {
+                appBarLayout.setTitle(c.toString());
+            }
+
+            public void beforeTextChanged(CharSequence c, int start, int count, int after) {
+                // this space intentionally left blank
+            }
+
+            public void afterTextChanged(Editable c) {
+                // this one too
+            }
+
+        });
 
         return rootView;
     }
