@@ -28,6 +28,10 @@ public class Range implements Comparable<Range>, Serializable {
     private int min;
     private String name;
 
+    public Range() {
+        this(0, 0, 0, "");
+    }
+
     public Range(long id, int max, int min, String name) {
         this.id = id;
         this.max = max;

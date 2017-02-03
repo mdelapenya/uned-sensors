@@ -59,6 +59,16 @@ public class RangeTest {
     }
 
     @Test
+    public void testDefaultConstructor() {
+        Range range = new Range();
+
+        Assert.assertEquals(0, range.getId());
+        Assert.assertEquals("", range.getName());
+        Assert.assertEquals(0, range.getMin());
+        Assert.assertEquals(0, range.getMax());
+    }
+
+    @Test
     public void testIsInRange() {
         Range r = new Range(1, 10, 1, "uno");
 
