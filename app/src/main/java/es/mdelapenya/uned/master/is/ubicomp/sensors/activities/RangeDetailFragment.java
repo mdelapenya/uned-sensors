@@ -92,12 +92,12 @@ public class RangeDetailFragment extends Fragment {
                 title = getContext().getString(resourceByName);
             }
 
-            ((TextView) rootView.findViewById(R.id.range_detail)).setText(range.toString());
-
+            TextView lbDetail = (TextView) rootView.findViewById(R.id.range_detail);
             EditText txtName = (EditText) rootView.findViewById(R.id.range_name);
             EditText txtMin = (EditText) rootView.findViewById(R.id.range_min);
             EditText txtMax = (EditText) rootView.findViewById(R.id.range_max);
 
+            lbDetail.setText(range.toString());
             txtName.setText(title);
             txtMin.setText(String.valueOf(range.getMin()));
             txtMax.setText(String.valueOf(range.getMax()));
