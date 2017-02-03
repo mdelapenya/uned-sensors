@@ -88,7 +88,7 @@ public class RangeDetailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.range_detail, container, false);
 
-        TextView lbDetail = (TextView) rootView.findViewById(R.id.range_detail);
+        final TextView lbDetail = (TextView) rootView.findViewById(R.id.range_detail);
         EditText txtName = (EditText) rootView.findViewById(R.id.range_name);
         EditText txtMin = (EditText) rootView.findViewById(R.id.range_min);
         EditText txtMax = (EditText) rootView.findViewById(R.id.range_max);
@@ -130,6 +130,54 @@ public class RangeDetailFragment extends Fragment {
             // the user's changes are saved here
             public void onTextChanged(CharSequence c, int start, int before, int count) {
                 appBarLayout.setTitle(c.toString());
+            }
+
+            public void beforeTextChanged(CharSequence c, int start, int count, int after) {
+                // this space intentionally left blank
+            }
+
+            public void afterTextChanged(Editable c) {
+                // this one too
+            }
+
+        });
+
+        txtMin.addTextChangedListener(new TextWatcher() {
+
+            // the user's changes are saved here
+            public void onTextChanged(CharSequence c, int start, int before, int count) {
+                if (c.length() > 0) {
+                    range.setMin(Integer.parseInt(c.toString()));
+                }
+                else {
+                    range.setMin(0);
+                }
+
+                lbDetail.setText(range.toString());
+            }
+
+            public void beforeTextChanged(CharSequence c, int start, int count, int after) {
+                // this space intentionally left blank
+            }
+
+            public void afterTextChanged(Editable c) {
+                // this one too
+            }
+
+        });
+
+        txtMax.addTextChangedListener(new TextWatcher() {
+
+            // the user's changes are saved here
+            public void onTextChanged(CharSequence c, int start, int before, int count) {
+                if (c.length() > 0) {
+                    range.setMax(Integer.parseInt(c.toString()));
+                }
+                else {
+                    range.setMax(0);
+                }
+
+                lbDetail.setText(range.toString());
             }
 
             public void beforeTextChanged(CharSequence c, int start, int count, int after) {

@@ -62,7 +62,7 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:id="@+id/range_min"
-            android:hint="@string/app_name"
+            android:hint="@string/min"
             android:maxLines="1"
             android:inputType="number"/>
     </android.support.v7.widget.LinearLayoutCompat>
@@ -88,7 +88,7 @@
             android:layout_height="50dp"
             android:id="@+id/range_max"
             android:layout_below="@id/range_min"
-            android:hint="@string/app_name"
+            android:hint="@string/max"
             android:maxLines="1"
             android:inputType="number"/>
     </android.support.v7.widget.LinearLayoutCompat>
