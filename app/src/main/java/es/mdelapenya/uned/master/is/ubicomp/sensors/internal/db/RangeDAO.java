@@ -89,10 +89,10 @@ public class RangeDAO implements Closeable {
         return ranges;
     }
 
-    public Range getRange(long rangeId) {
-        String selection = RangeDBHelper.Range._ID + "=?";
+    public Range findBy(Criterion criterion) {
+        String selection = criterion.getField() + "=?";
 
-        String[] selectionArgs = { String.valueOf(rangeId) };
+        String[] selectionArgs = { String.valueOf(criterion.getValue()) };
 
         try (Cursor cursor = database.query(
             RangeDBHelper.Range.TABLE_NAME, allColumns, selection, selectionArgs, null, null,
@@ -106,6 +106,10 @@ public class RangeDAO implements Closeable {
         }
 
         return null;
+    }
+
+    public Range getRange(long rangeId) {
+        return findBy(new CriterionImpl(RangeDBHelper.Range._ID, new Long(rangeId)));
     }
 
     public void open() throws SQLException {

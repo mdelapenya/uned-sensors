@@ -14,27 +14,15 @@
  * limitations under the License.
  */
 
-package es.mdelapenya.uned.master.is.ubicomp.sensors.services;
-
-import java.util.List;
-
-import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db.Criterion;
+package es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db;
 
 /**
  * @author Manuel de la Peña
  */
-public interface CRUDService<T> {
+public interface Criterion {
 
-    T add(T t);
+    String getField();
 
-    void delete(T t);
-
-    List<T> findBy(Criterion criterion);
-
-    T get(long id);
-
-    List<T> list();
-
-    T update(T t);
+    Object getValue();
 
 }

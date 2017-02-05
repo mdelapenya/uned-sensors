@@ -18,8 +18,10 @@ package es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db.Criterion;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db.RangeDAO;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.services.CRUDService;
@@ -44,6 +46,21 @@ public class RangeService implements CRUDService<Range> {
     public void delete(Range range) {
         try (RangeDAO rangeDAO = new RangeDAO((context))) {
             rangeDAO.deleteRange(range);
+        }
+    }
+
+    @Override
+    public List<Range> findBy(Criterion criterion) {
+        List<Range> list = new ArrayList<>();
+
+        try (RangeDAO rangeDAO = new RangeDAO((context))) {
+            Range range = rangeDAO.findBy(criterion);
+
+            if (range != null) {
+                list.add(range);
+            }
+
+            return list;
         }
     }
 
