@@ -187,15 +187,15 @@ public class RangeDetailFragment extends Fragment {
      * @return if there is a duplicate range in the collection
      */
     private boolean checkDuplicates(List<Range> ranges) {
-        if (ranges.size() > 0) {
-            if (ranges.get(0).getId() == range.getId()) {
-                return false;
-            }
-
-            return true;
+        if (ranges.size() == 0) {
+            return false;
         }
 
-        return false;
+        if (ranges.get(0).getId() == range.getId()) {
+            return false;
+        }
+
+        return true;
     }
 
     private TextWatcher createMaxTextWatcher(final TextView lbDetail) {
