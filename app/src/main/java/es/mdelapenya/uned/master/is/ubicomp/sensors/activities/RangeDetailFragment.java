@@ -113,6 +113,8 @@ public class RangeDetailFragment extends Fragment {
             }
         }
 
+        range.setName(title);
+
         lbDetail.setText(range.toString());
         txtName.setText(title);
         txtMin.setText(String.valueOf(range.getMin()));
