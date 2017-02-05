@@ -68,10 +68,13 @@ public class RangeDetailActivity extends AppCompatActivity {
 
                 Range range = rangeDetailFragment.getRange();
 
-                saveRange(range);
+                String message = getString(R.string.range_created_ok);
 
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+                if (range.getId() > 0) {
+                    message = getString(R.string.range_updated_ok);
+                }
+
+                Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
 
         });

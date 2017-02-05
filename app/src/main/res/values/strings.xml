@@ -5,7 +5,9 @@
     <string name="min">Min</string>
     <string name="name">Name</string>
     <string name="new_range">Nuevo Rango</string>
+    <string name="range.created.ok">El rango ha sido CREADO con éxito</string>
     <string name="range.deleted.ok">Sensor Ranges</string>
+    <string name="range.updated.ok">El rango ha sido ACTUALIZADO con éxito</string>
     <string name="sensor.ranges">Sensor Ranges</string>
     <string name="status_aerial_motor_vehicle">VEH. MOTOR AÉREO</string>
     <string name="status_marching">MARCHANDO</string>
