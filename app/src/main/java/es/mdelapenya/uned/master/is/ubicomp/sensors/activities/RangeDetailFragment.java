@@ -104,11 +104,6 @@ public class RangeDetailFragment extends Fragment {
             if (resourceByName != 0) {
                 title = getContext().getString(resourceByName);
             }
-
-            lbDetail.setText(range.toString());
-            txtName.setText(title);
-            txtMin.setText(String.valueOf(range.getMin()));
-            txtMax.setText(String.valueOf(range.getMax()));
         }
 
         lbDetail.setText(range.toString());
