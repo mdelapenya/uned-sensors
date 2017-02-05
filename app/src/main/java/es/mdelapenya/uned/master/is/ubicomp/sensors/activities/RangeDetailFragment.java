@@ -34,7 +34,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
-import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db.RangeDAO;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services.RangeService;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.util.ResourceLocator;
 
@@ -74,7 +74,7 @@ public class RangeDetailFragment extends Fragment {
             long rangeId = getArguments().getLong(ARG_RANGE_ID);
 
             if (rangeId > 0) {
-                range = new RangeDAO(getContext()).getRange(rangeId);
+                range = new RangeService(getContext()).get(rangeId);
             }
             else {
                 range = new Range();

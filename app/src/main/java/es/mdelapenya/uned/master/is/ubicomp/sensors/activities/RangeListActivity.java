@@ -41,7 +41,6 @@ import android.widget.Toast;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.adapters.DismissRangesTouchHelper;
-import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db.RangeDAO;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services.RangeService;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.services.CRUDService;
@@ -124,7 +123,7 @@ public class RangeListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        List<Range> ranges = new RangeDAO(this).getAllRanges();
+        List<Range> ranges = new RangeService(this).list();
 
         RangesAdapter adapter = new RangesAdapter(ranges);
 
