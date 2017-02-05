@@ -136,6 +136,10 @@ public class RangeDetailFragment extends Fragment {
         return rootView;
     }
 
+    public void setRange(Range range) {
+        this.range = range;
+    }
+
     private TextWatcher createMaxTextWatcher(final TextView lbDetail) {
         return new TextWatcher() {
 

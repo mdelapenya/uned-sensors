@@ -74,6 +74,8 @@ public class RangeDetailActivity extends AppCompatActivity {
                     message = getString(R.string.range_updated_ok);
                 }
 
+                rangeDetailFragment.setRange(saveRange(range));
+
                 Snackbar.make(view, message, Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
 
