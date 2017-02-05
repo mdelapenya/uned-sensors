@@ -253,6 +253,8 @@ public class RangeDetailFragment extends Fragment {
 
             public void onTextChanged(CharSequence c, int start, int before, int count) {
                 appBarLayout.setTitle(c.toString());
+
+                range.setName(c.toString());
             }
 
             public void beforeTextChanged(CharSequence c, int start, int count, int after) {
