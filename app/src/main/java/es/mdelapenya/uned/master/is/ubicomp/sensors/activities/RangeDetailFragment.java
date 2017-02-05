@@ -66,6 +66,13 @@ public class RangeDetailFragment extends Fragment {
     public RangeDetailFragment() {
     }
 
+    /**
+     * @return the Range this fragment is representing
+     */
+    public Range getRange() {
+        return range;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

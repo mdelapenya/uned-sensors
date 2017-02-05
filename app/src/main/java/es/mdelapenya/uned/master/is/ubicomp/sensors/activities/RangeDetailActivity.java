@@ -29,10 +29,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.MenuItem;
 
+import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services.RangeService;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.services.CRUDService;
+
 /**
  * @author Manuel de la Peña
  */
-import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
 
 /**
  * An activity representing a single Range detail screen. This
@@ -58,6 +62,14 @@ public class RangeDetailActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                RangeDetailFragment rangeDetailFragment =
+                    (RangeDetailFragment) getSupportFragmentManager().findFragmentById(
+                        R.id.range_detail_container);
+
+                Range range = rangeDetailFragment.getRange();
+
+                saveRange(range);
+
                 Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             }
@@ -117,6 +129,16 @@ public class RangeDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private Range saveRange(Range range) {
+        CRUDService<Range> rangeService = new RangeService(this);
+
+        if (range.getId() > 0) {
+            return rangeService.update(range);
+        }
+
+        return rangeService.add(range);
     }
 
 }
