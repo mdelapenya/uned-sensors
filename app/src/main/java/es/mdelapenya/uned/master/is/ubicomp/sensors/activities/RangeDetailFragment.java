@@ -33,7 +33,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.List;
+
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db.CriterionImpl;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db.RangeDBHelper;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services.RangeService;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.model.Range;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.util.ResourceLocator;
@@ -54,6 +58,11 @@ public class RangeDetailFragment extends Fragment {
      */
     public static final String ARG_RANGE_ID = "range_id";
 
+    private TextView lbDetail;
+    private EditText txtName;
+    private EditText txtMin;
+    private EditText txtMax;
+
     /**
      * The range this fragment is presenting.
      */
@@ -71,6 +80,34 @@ public class RangeDetailFragment extends Fragment {
      */
     public Range getRange() {
         return range;
+    }
+
+    /**
+     * @return the status of the validation process, based on the existence of ranges with same min
+     *         or max values.
+     */
+    public boolean isValidationSuccess() {
+        RangeService rangeService = new RangeService(getContext());
+
+        List<Range> minRanges = rangeService.findBy(
+            new CriterionImpl(RangeDBHelper.Range.COLUMN_NAME_MIN, range.getMin()));
+
+        if (checkDuplicates(minRanges)) {
+            txtMin.requestFocus();
+
+            return false;
+        }
+
+        List<Range> maxRanges = rangeService.findBy(
+            new CriterionImpl(RangeDBHelper.Range.COLUMN_NAME_MAX, range.getMax()));
+
+        if (checkDuplicates(maxRanges)) {
+            txtMax.requestFocus();
+
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -95,10 +132,10 @@ public class RangeDetailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.range_detail, container, false);
 
-        final TextView lbDetail = (TextView) rootView.findViewById(R.id.range_detail);
-        EditText txtName = (EditText) rootView.findViewById(R.id.range_name);
-        EditText txtMin = (EditText) rootView.findViewById(R.id.range_min);
-        EditText txtMax = (EditText) rootView.findViewById(R.id.range_max);
+        lbDetail = (TextView) rootView.findViewById(R.id.range_detail);
+        txtName = (EditText) rootView.findViewById(R.id.range_name);
+        txtMin = (EditText) rootView.findViewById(R.id.range_min);
+        txtMax = (EditText) rootView.findViewById(R.id.range_max);
 
         String title = getContext().getString(R.string.new_range);
 
@@ -138,6 +175,27 @@ public class RangeDetailFragment extends Fragment {
 
     public void setRange(Range range) {
         this.range = range;
+    }
+
+    /**
+     * Checks if a range is duplicated, being possible to exist only one range with MIN or MAX field.
+     *
+     * It also checks if the range this fragment is representing is the one in the list, which means
+     * that the user is updating that range, so no min/max validation is required.
+     *
+     * @param ranges a filtered collection of ranges
+     * @return if there is a duplicate range in the collection
+     */
+    private boolean checkDuplicates(List<Range> ranges) {
+        if (ranges.size() > 0) {
+            if (ranges.get(0).getId() == range.getId()) {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     private TextWatcher createMaxTextWatcher(final TextView lbDetail) {

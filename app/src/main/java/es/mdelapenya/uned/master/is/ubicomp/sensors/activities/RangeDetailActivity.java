@@ -66,6 +66,14 @@ public class RangeDetailActivity extends AppCompatActivity {
                     (RangeDetailFragment) getSupportFragmentManager().findFragmentById(
                         R.id.range_detail_container);
 
+                if (!rangeDetailFragment.isValidationSuccess()) {
+                    Snackbar.make(
+                            view, getString(R.string.validation_range), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+                    return;
+                }
+
                 Range range = rangeDetailFragment.getRange();
 
                 String message = getString(R.string.range_created_ok);
