@@ -37,7 +37,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.adapters.DismissRangesTouchHelper;
@@ -207,7 +206,9 @@ public class RangeListActivity extends AppCompatActivity {
             return ranges.size();
         }
 
-        public void remove(int position) {
+        public void remove(RecyclerView.ViewHolder viewHolder) {
+            int position = viewHolder.getAdapterPosition();
+
             CRUDService rangeService = new RangeService(context);
 
             Range range = ranges.get(position);
@@ -218,9 +219,10 @@ public class RangeListActivity extends AppCompatActivity {
 
             notifyItemRemoved(position);
 
-            Toast.makeText(
-                context, context.getString(R.string.range_deleted_ok), Toast.LENGTH_SHORT)
-                .show();
+            Snackbar.make(
+                    viewHolder.itemView, context.getString(R.string.range_deleted_ok),
+                    Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
         }
 
         public class RangeViewHolder extends RecyclerView.ViewHolder {

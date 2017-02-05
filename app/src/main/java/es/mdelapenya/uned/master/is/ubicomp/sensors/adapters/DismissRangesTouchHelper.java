@@ -44,7 +44,7 @@ public class DismissRangesTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        rangesAdapter.remove(viewHolder.getAdapterPosition());
+        rangesAdapter.remove(viewHolder);
     }
 
 }
