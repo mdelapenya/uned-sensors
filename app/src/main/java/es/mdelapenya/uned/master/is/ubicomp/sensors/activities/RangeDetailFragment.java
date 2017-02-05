@@ -95,7 +95,7 @@ public class RangeDetailFragment extends Fragment {
 
         String title = getContext().getString(R.string.new_range);
 
-        if (range != null) {
+        if (range.getId() > 0) {
             title = range.getName();
 
             int resourceByName = ResourceLocator.getStringResourceByName(
