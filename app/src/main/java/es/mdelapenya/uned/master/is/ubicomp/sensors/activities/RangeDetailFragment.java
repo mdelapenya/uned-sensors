@@ -130,7 +130,6 @@ public class RangeDetailFragment extends Fragment {
     private TextWatcher createMaxTextWatcher(final TextView lbDetail) {
         return new TextWatcher() {
 
-            // the user's changes are saved here
             public void onTextChanged(CharSequence c, int start, int before, int count) {
                 if (c.length() > 0) {
                     range.setMax(Integer.parseInt(c.toString()));
@@ -143,11 +142,11 @@ public class RangeDetailFragment extends Fragment {
             }
 
             public void beforeTextChanged(CharSequence c, int start, int count, int after) {
-                // this space intentionally left blank
+                // NOOP
             }
 
             public void afterTextChanged(Editable c) {
-                // this one too
+                // NOOP
             }
 
         };
@@ -156,7 +155,6 @@ public class RangeDetailFragment extends Fragment {
     private TextWatcher createMinTextWatcher(final TextView lbDetail) {
         return new TextWatcher() {
 
-            // the user's changes are saved here
             public void onTextChanged(CharSequence c, int start, int before, int count) {
                 if (c.length() > 0) {
                     range.setMin(Integer.parseInt(c.toString()));
@@ -169,11 +167,11 @@ public class RangeDetailFragment extends Fragment {
             }
 
             public void beforeTextChanged(CharSequence c, int start, int count, int after) {
-                // this space intentionally left blank
+                // NOOP
             }
 
             public void afterTextChanged(Editable c) {
-                // this one too
+                // NOOP
             }
 
         };
@@ -182,17 +180,16 @@ public class RangeDetailFragment extends Fragment {
     private TextWatcher createNameTextWatcher(final CollapsingToolbarLayout appBarLayout) {
         return new TextWatcher() {
 
-            // the user's changes are saved here
             public void onTextChanged(CharSequence c, int start, int before, int count) {
                 appBarLayout.setTitle(c.toString());
             }
 
             public void beforeTextChanged(CharSequence c, int start, int count, int after) {
-                // this space intentionally left blank
+                // NOOP
             }
 
             public void afterTextChanged(Editable c) {
-                // this one too
+                // NOOP
             }
 
         };
