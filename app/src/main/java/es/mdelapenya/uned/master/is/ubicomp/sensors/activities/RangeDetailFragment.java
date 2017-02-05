@@ -120,48 +120,15 @@ public class RangeDetailFragment extends Fragment {
             appBarLayout.setTitle(title);
         }
 
-        txtName.addTextChangedListener(new TextWatcher() {
+        txtName.addTextChangedListener(createNameTextWatcher(appBarLayout));
+        txtMin.addTextChangedListener(createMinTextWatcher(lbDetail));
+        txtMax.addTextChangedListener(createMaxTextWatcher(lbDetail));
 
-            // the user's changes are saved here
-            public void onTextChanged(CharSequence c, int start, int before, int count) {
-                appBarLayout.setTitle(c.toString());
-            }
+        return rootView;
+    }
 
-            public void beforeTextChanged(CharSequence c, int start, int count, int after) {
-                // this space intentionally left blank
-            }
-
-            public void afterTextChanged(Editable c) {
-                // this one too
-            }
-
-        });
-
-        txtMin.addTextChangedListener(new TextWatcher() {
-
-            // the user's changes are saved here
-            public void onTextChanged(CharSequence c, int start, int before, int count) {
-                if (c.length() > 0) {
-                    range.setMin(Integer.parseInt(c.toString()));
-                }
-                else {
-                    range.setMin(0);
-                }
-
-                lbDetail.setText(range.toString());
-            }
-
-            public void beforeTextChanged(CharSequence c, int start, int count, int after) {
-                // this space intentionally left blank
-            }
-
-            public void afterTextChanged(Editable c) {
-                // this one too
-            }
-
-        });
-
-        txtMax.addTextChangedListener(new TextWatcher() {
+    private TextWatcher createMaxTextWatcher(final TextView lbDetail) {
+        return new TextWatcher() {
 
             // the user's changes are saved here
             public void onTextChanged(CharSequence c, int start, int before, int count) {
@@ -183,9 +150,52 @@ public class RangeDetailFragment extends Fragment {
                 // this one too
             }
 
-        });
+        };
+    }
 
-        return rootView;
+    private TextWatcher createMinTextWatcher(final TextView lbDetail) {
+        return new TextWatcher() {
+
+            // the user's changes are saved here
+            public void onTextChanged(CharSequence c, int start, int before, int count) {
+                if (c.length() > 0) {
+                    range.setMin(Integer.parseInt(c.toString()));
+                }
+                else {
+                    range.setMin(0);
+                }
+
+                lbDetail.setText(range.toString());
+            }
+
+            public void beforeTextChanged(CharSequence c, int start, int count, int after) {
+                // this space intentionally left blank
+            }
+
+            public void afterTextChanged(Editable c) {
+                // this one too
+            }
+
+        };
+    }
+
+    private TextWatcher createNameTextWatcher(final CollapsingToolbarLayout appBarLayout) {
+        return new TextWatcher() {
+
+            // the user's changes are saved here
+            public void onTextChanged(CharSequence c, int start, int before, int count) {
+                appBarLayout.setTitle(c.toString());
+            }
+
+            public void beforeTextChanged(CharSequence c, int start, int count, int after) {
+                // this space intentionally left blank
+            }
+
+            public void afterTextChanged(Editable c) {
+                // this one too
+            }
+
+        };
     }
 
 }
