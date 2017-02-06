@@ -81,12 +81,14 @@ public class BaseGeoLocatedActivity extends AppCompatActivity
                 speed = currentLocation.getSpeed();
             }
 
+            this.speed = new Float(speed);
+
             lastLocation = currentLocation;
         }
     }
 
     protected float getSpeed() {
-        return lastLocation.getSpeed();
+        return speed;
     }
 
     @Override
@@ -202,5 +204,6 @@ public class BaseGeoLocatedActivity extends AppCompatActivity
 
     private GoogleApiClient googleApiClient;
     private Location lastLocation;
+    private float speed;
 
 }
