@@ -35,8 +35,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.R;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.activities.location.BaseGeoLocatedActivity;
@@ -160,6 +164,14 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
         return this.getString(R.string.status_stopped);
     }
 
+    private String roundSpeed(float speed) {
+        NumberFormat numberFormatInstance = NumberFormat.getNumberInstance(Locale.getDefault());
+
+        DecimalFormat decimalFormat = (DecimalFormat)numberFormatInstance;
+
+        return decimalFormat.format(speed);
+    }
+
     private void showConfiguration() {
         Intent intent = new Intent(this, RangeListActivity.class);
 
@@ -177,7 +189,7 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
         float speedKm = SpeedConverter.convertToKmsh(getSpeed());
 
         String rangeName = getRangeName(speedKm);
-        String speedValue = String.valueOf(speedKm);
+        String speedValue = roundSpeed(speedKm);
 
         if (!UIManager.syncUIRequired(speedValue, oldSpeed, rangeName, oldSpeedText)) {
             return;
