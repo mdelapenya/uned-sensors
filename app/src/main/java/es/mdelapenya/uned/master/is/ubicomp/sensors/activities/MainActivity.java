@@ -53,8 +53,8 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
 
     private TextView currentSpeed;
     private TextView currentSpeedText;
-    private String oldSpeedValue = "0.00";
-    private int oldSpeedTextResourceId = 0;
+    private String oldSpeed = "0.00";
+    private String oldSpeedText = "";
     private SensorManager sensorManager;
     private Sensor linearAccelerationSensor;
     private List<Range> ranges;
@@ -160,30 +160,34 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
     private void updateUI() {
         float speedKm = SpeedConverter.convertToKmsh(getSpeed());
 
-        int id = getResourceId(speedKm);
+        String rangeName = getRangeName(speedKm);
         String speedValue = String.valueOf(speedKm);
 
-        if (!UIManager.syncUIRequired(speedValue, oldSpeedValue, id, oldSpeedTextResourceId)) {
+        if (!UIManager.syncUIRequired(speedValue, oldSpeed, rangeName, oldSpeedText)) {
             return;
         }
 
         currentSpeed.setText(speedValue);
-        currentSpeedText.setText(this.getString(id));
+        currentSpeedText.setText(rangeName);
 
-        oldSpeedValue = speedValue;
-        oldSpeedTextResourceId = id;
+        oldSpeed = speedValue;
+        oldSpeedText = rangeName;
     }
 
-    private int getResourceId(float currentSpeed) {
-        int resourceId = R.string.status_stopped;
-
+    private String getRangeName(float currentSpeed) {
         for (Range range : ranges) {
             if (range.isInRange(currentSpeed)) {
-                return ResourceLocator.getStringResourceByName(this, range.getName());
+                int resourceByName = ResourceLocator.getStringResourceByName(this, range.getName());
+
+                if (resourceByName > 0) {
+                    return this.getString(resourceByName);
+                }
+
+                return range.getName();
             }
         }
 
-        return resourceId;
+        return this.getString(R.string.status_stopped);
     }
 
 }

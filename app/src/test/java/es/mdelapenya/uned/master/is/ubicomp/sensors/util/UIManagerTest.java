@@ -27,19 +27,19 @@ public class UIManagerTest {
 
     @Test
     public void testSyncUIRequired() {
-        Assert.assertFalse(UIManager.syncUIRequired("0.00", "0.00", 1, 1));
+        Assert.assertFalse(UIManager.syncUIRequired("0.00", "0.00", "range", "range"));
 
-        Assert.assertTrue(UIManager.syncUIRequired("0.00", "1.00", 1, 2));
+        Assert.assertTrue(UIManager.syncUIRequired("0.00", "1.00", "range1", "range2"));
     }
 
     @Test
     public void testSyncUIRequiredWithDifferentIds() {
-        Assert.assertTrue(UIManager.syncUIRequired("0.00", "0.00", 1, 2));
+        Assert.assertTrue(UIManager.syncUIRequired("0.00", "0.00", "range1", "range2"));
     }
 
     @Test
     public void testSyncUIRequiredWithDifferentSpeed() {
-        Assert.assertTrue(UIManager.syncUIRequired("0.00", "1.00", 1, 1));
+        Assert.assertTrue(UIManager.syncUIRequired("0.00", "1.00", "range", "range"));
     }
 
 }

@@ -22,9 +22,9 @@ package es.mdelapenya.uned.master.is.ubicomp.sensors.util;
 public class UIManager {
 
     public static boolean syncUIRequired(
-        String speedValue, String oldSpeedValue, int id, int oldSpeedImageId) {
+        String speedValue, String oldSpeedValue, String rangeName, String oldRangeName) {
 
-        if (speedValue.equalsIgnoreCase(oldSpeedValue) && id == oldSpeedImageId) {
+        if (speedValue.equalsIgnoreCase(oldSpeedValue) && rangeName.equalsIgnoreCase(oldRangeName)) {
             return false;
         }
 
