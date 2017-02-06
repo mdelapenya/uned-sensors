@@ -102,6 +102,13 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
     }
 
     @Override
+    public void onLocationChanged(Location location) {
+        super.onLocationChanged(location);
+
+        updateUI();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sensors_config:
@@ -118,9 +125,7 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        super.onLocationChanged(location);
-
+    public void onSensorChanged(SensorEvent event) {
         updateUI();
     }
 
@@ -139,9 +144,20 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
             this, linearAccelerationSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        updateUI();
+    private String getRangeName(float currentSpeed) {
+        for (Range range : ranges) {
+            if (range.isInRange(currentSpeed)) {
+                int resourceByName = ResourceLocator.getStringResourceByName(this, range.getName());
+
+                if (resourceByName > 0) {
+                    return this.getString(resourceByName);
+                }
+
+                return range.getName();
+            }
+        }
+
+        return this.getString(R.string.status_stopped);
     }
 
     private void showConfiguration() {
@@ -172,22 +188,6 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
 
         oldSpeed = speedValue;
         oldSpeedText = rangeName;
-    }
-
-    private String getRangeName(float currentSpeed) {
-        for (Range range : ranges) {
-            if (range.isInRange(currentSpeed)) {
-                int resourceByName = ResourceLocator.getStringResourceByName(this, range.getName());
-
-                if (resourceByName > 0) {
-                    return this.getString(resourceByName);
-                }
-
-                return range.getName();
-            }
-        }
-
-        return this.getString(R.string.status_stopped);
     }
 
 }
