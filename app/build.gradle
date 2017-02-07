@@ -29,3 +29,12 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.google.android.gms:play-services-location:10.0.1'
 }
+
+android.testOptions.unitTests.all {
+    // Configure whether failing tests should fail the build
+    ignoreFailures false
+
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
