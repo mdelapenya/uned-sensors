@@ -36,12 +36,17 @@ de SPRINT para cambiar a CORRIENDO.
 
 ## Arquitectura de la solución
 
-Para el desarrollo de la práctica se ha utilizado el sensor **acelerómetro**, disponible en los
-diferentes dispositivos móviles existentes en el mercado: Android, iOS, Windows Phone. Por simplicidad,
-se ha realizado el desarrollo de la misma bajo la tecnología **Android**, de modo que para poder probar
-la aplicación será necesario disponer de un terminal con este sistema operativo móvil.
+Existen numerosos enfoques para abordar el desarrollo de una aplicación en un dispositivo móvil. Para
+comenzar, es necesario elegir la plataforma de desarrollo. Actualmente existen iOS, Android y Windows
+Phone como principales plataformas de desarrollo, aunque existen alguna más con una horquilla del
+mercado extremadamente reducida en comparación con las tres mencionadas, como podría ser BlackBerry.
 
-La aplicación ha sido desarrollada según los patrones de desarrollo de Android, por el cual las vistas
+Debido a la facilidad de acceso a un dispositivo *Android*, así como el aprovechamiento del conocimiento
+del lenguaje Java por parte del desarrollador, se ha optado por realizar el desarrollo de la práctica
+bajo la tecnología **Android**, de modo que para poder probar la aplicación será necesario disponer
+de un terminal con este sistema operativo móvil.
+
+La aplicación ha sido desarrollada según los patrones de desarrollo de *Android*, por el cual las vistas
 se encapsulan en clases de tipo **Activity**. Estas *activities* serán las responsables de disparar
 la lógica de negocio de la aplicación, así como de responder ante los eventos disponibles en el
 terminal, como pueden ser los cambios de orientación, cambios de posición, etc.
