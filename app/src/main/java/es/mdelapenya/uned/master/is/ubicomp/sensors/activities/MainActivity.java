@@ -16,13 +16,7 @@
 
 package es.mdelapenya.uned.master.is.ubicomp.sensors.activities;
 
-import android.content.Context;
 import android.content.Intent;
-
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 
 import android.location.Location;
 
@@ -53,38 +47,19 @@ import es.mdelapenya.uned.master.is.ubicomp.sensors.util.UIManager;
 /**
  * @author Manuel de la Peña
  */
-public class MainActivity extends BaseGeoLocatedActivity implements SensorEventListener {
+public class MainActivity extends BaseGeoLocatedActivity {
 
     private TextView currentSpeed;
     private TextView currentSpeedText;
     private String oldSpeed = "0.00";
     private String oldSpeedText = "";
-    private SensorManager sensorManager;
-    private Sensor linearAccelerationSensor;
     private List<Range> ranges;
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        updateUI();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
-        linearAccelerationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-
-        if (linearAccelerationSensor != null) {
-            // Success! There's a linear acceleration sensor.
-        } else {
-            Toast.makeText(
-                MainActivity.this,
-                "No Linear Acceleration Sensor detected", Toast.LENGTH_SHORT).show();
-        }
 
         currentSpeed = (TextView) findViewById(R.id.current_speed);
         currentSpeedText = (TextView) findViewById(R.id.current_speed_text);
@@ -126,26 +101,6 @@ public class MainActivity extends BaseGeoLocatedActivity implements SensorEventL
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        updateUI();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        sensorManager.unregisterListener(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        sensorManager.registerListener(
-            this, linearAccelerationSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     private String getRangeName(float currentSpeed) {
