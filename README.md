@@ -98,8 +98,18 @@ experiencia de uso de la aplicación es conveniente utilizarla en exteriores, co
 
 ## Desarrollo
 
-En el desarrollo de la aplicación se ha utilizado la estructura de paquetes para realizar la separación
-lógica entre los diferentes componentes de la misma.
+El proceso de desarrollo viene definido por el desarrollo de aplicaciones Android, por lo que es
+necesario la instalación de un SDK de Android, así como tener la versión adecuada de Java respecto al
+SDK anterior.
+
+De este modo, el SDK de Android utilizado es la versión 23.0.3, con una versión de Java 1.8.0_45
+(Java8).
+
+Para la construcciónd del proyecto, tal y como es habitual en los proyectos *Android*, se ha utilizado
+**Gradle**, en su versión 3.3.
+
+Por otro lado, en el desarrollo de la aplicación se ha utilizado una estructura de paquetes adecuada
+para realizar la separación lógica entre los diferentes componentes de la misma.
 
 A continuación se detallan los paquetes de la aplicación.
 
