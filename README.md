@@ -421,6 +421,8 @@ de su ejecución.
 * Un test que falla de manera constante es inútil.
 * Un test que no puede fallar no aporta valor, pues crea una falsa sensación de seguridad.
 
+### Tests unitarios
+
 Por tanto, y siguiendo las prácticas anteriores, para aquellas funcionalidades sin dependencias
 externas se han escritos pruebas unitarias. Estos tests unitarios utilizan *jUnit* como framework de
 escritura y ejecución de tests.
@@ -441,6 +443,17 @@ Cuyo resultado será el siguiente:
     es.mdelapenya.uned.master.is.ubicomp.sensors.util.UIManagerTest > testSyncUIRequiredWithDifferentIds PASSED
     es.mdelapenya.uned.master.is.ubicomp.sensors.util.UIManagerTest > testSyncUIRequired PASSED
     es.mdelapenya.uned.master.is.ubicomp.sensors.util.UIManagerTest > testSyncUIRequiredWithDifferentSpeed PASSED
+
+### Tests de integración
+
+Debido a la simplicidad de la aplicación, y de no poseer dependencias externas con las que integrarse,
+no se han escrito tests de ingración.
+
+### Exploratory Testing
+
+Se han realizado pruebas exploratorias (o `Exploratory Testing`) sobre la aplicación, de modo que
+todos los controles han sido extensamente probados, utilizando diferentes prácticas: valores límite,
+valores incorrectos, valores nulos en los campos, etc.
 
 ## Capturas
 
