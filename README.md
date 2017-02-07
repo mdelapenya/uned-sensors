@@ -84,8 +84,8 @@ a constantemente leer del hardware para actualizar los datos de representación 
 del terminal, lo cual consumiría muchos recursos, sobre todo de batería. En cambio, si utilizásemos
 los valores obtenidos desde el GPS, a través de los servicios de *Google Play Services*, podríamos
 definir la frecuencia de actualización de esas lecturas, ocurriendo ésto en el evento de cambio de
-ubicación del GPS, ocurriendo ésta con mucha menor frecuencia que en el caso de los sensores físicos
-comentados con anterioridad.
+ubicación del GPS. Del mismo modo, este evento de cambio de la posición ocurre con con mucha menor
+frecuencia que en el caso de los sensores físicos comentados con anterioridad.
 
 Por esta razón, la aplicación desarrollada utiliza os servicios de *Google Play Services* para obtener
 los datos de posición del dispotivo, obteniendo la velocidad instantánea directamente desde este API.
