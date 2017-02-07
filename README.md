@@ -444,4 +444,24 @@ Cuyo resultado será el siguiente:
 
 ## Capturas
 
+### Pantalla Principal
+
+![MainActivity](./static/screenshot_main.png)
+
+### Pantalla de Administración de Rangos
+
+![Configuración desde MainActivity](./static/screenshot_main_config.png)
+
+### Pantalla de Lista de rangos
+
+![Lista de Rangos](./static/screenshot_range_list.png)
+
+### Pantalla de Nuevo Rango
+
+![Nuevo Rango](./static/screenshot_new_range.png)
+
+### Pantalla de Edición de Rango
+
+![Modificación de Rango](./static/screenshot_edit_range.png)
+
 ## Recursos
