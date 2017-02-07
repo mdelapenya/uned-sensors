@@ -20,5 +20,5 @@
     <string name="action_settings">Configuración</string>
     <string name="title_range_list">Rangos</string>
     <string name="title_range_detail">Detalle de Rango</string>
-    <string name="validation.range">Existen rangos con los valores MIN o MAX indicados. Por favor, revisa los datos.</string>
+    <string name="validation.range">Los datos no son correctos: o existen campos vacíos, o ya existen rangos con los valores MIN o MAX indicados. Por favor, revisa los datos.</string>
 </resources>

@@ -87,6 +87,10 @@ public class RangeDetailFragment extends Fragment {
      *         or max values.
      */
     public boolean isValidationSuccess() {
+        if ("".equals(range.getName())) {
+            return false;
+        }
+
         RangeService rangeService = new RangeService(getContext());
 
         List<Range> minRanges = rangeService.findBy(
