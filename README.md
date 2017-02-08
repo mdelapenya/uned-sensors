@@ -7,6 +7,8 @@
     Curso: 2016-2017
     Universidad Nacional de Educación a Distancia (U.N.E.D.)
 
+Para acceder en modo online a este documento, por favor visite [el siguiente enlace](https://github.com/mdelapenya/uned-sensors/blob/master/README.md)
+
 ## Enunciado de la práctica
 
 Diseñar e implementar un nuevo sensor (denominado MIVELOCIDAD) “virtual” que devolverá un valor
@@ -56,9 +58,10 @@ uno de estos cambios, leerá del sensor hardware del dispositivo el valor de la 
 
 Además, la aplicación permitirá definir unos rangos de velocidades, de modo que se pueda identificar
 el rango de velocidad en el que se encuentra el sensor del dispositivo, comparando la velocidad actual
-con los valores límite establecidos para cada uno de los rangos.
+con los valores límite establecidos para cada uno de los rangos, determinando de este modo el rango
+de velocidad en el que se encuentra el dispositivo.
 
-Estos rangos tendrán unos valores límite, mínimo y máximo valor que determine el rango de velocidad,
+Estos rangos tendrán unos valores límite, valores mínimo y máximo, que determinen el rango de velocidad,
 así como un nombre que lo identifique.
 
 ## Diseño del sensor
@@ -79,22 +82,22 @@ librerías de *Google Play Services*. En estas librerías se tiene acceso a los 
 obtenidos del chip GPS del dispositivo, y en función a la posición actual y anterior, calcular la
 velocidad instantánea del mismo, que es un valor leído directamente del GPS del dispositivo.
 
-Si optásemos por la lectura desde los sensores del acelerómetro y de la aceleración lineal, nos obligaría
+Si optásemos por la lectura desde los sensores del acelerómetro o de la aceleración lineal, nos obligaría
 a constantemente leer del hardware para actualizar los datos de representación en la pantalla
 del terminal, lo cual consumiría muchos recursos, sobre todo de batería. En cambio, si utilizásemos
-los valores obtenidos desde el GPS, a través de los servicios de *Google Play Services*, podríamos
-definir la frecuencia de actualización de esas lecturas, ocurriendo ésto en el evento de cambio de
-ubicación del GPS. Del mismo modo, este evento de cambio de la posición ocurre con con mucha menor
-frecuencia que en el caso de los sensores físicos comentados con anterioridad.
+los valores obtenidos desde el GPS, a través de los servicios de *Google Play Services*, reduciríamos
+la frecuencia de actualización de esas lecturas, ocurriendo ésto en el evento de cambio de ubicación
+del GPS. Es importante destacar que este evento de cambio de la posición ocurre con con mucha menor
+frecuencia que los eventos asociados a los sensores físicos comentados con anterioridad.
 
-Por esta razón, la aplicación desarrollada utiliza os servicios de *Google Play Services* para obtener
+Por esta razón, la aplicación desarrollada utiliza los servicios de *Google Play Services* para obtener
 los datos de posición del dispotivo, obteniendo la velocidad instantánea directamente desde este API.
 
 ### Limitaciones del sensor
 
 Es importante conocer que el uso de estos servicios de localización tienen la misma limitación que un
-GPS convencional, esto es, el mal funcionamiento en interiores, de modo que para disfrutar de la mejor
-experiencia de uso de la aplicación es conveniente utilizarla en exteriores, con cobertura GPS.
+GPS convencional, esto es, el **mal funcionamiento en interiores**, de modo que para disfrutar de la
+mejor experiencia de uso de la aplicación es conveniente utilizarla en exteriores, con cobertura GPS.
 
 ## Desarrollo
 
@@ -102,8 +105,7 @@ El proceso de desarrollo viene definido por el desarrollo de aplicaciones Androi
 necesario la instalación de un SDK de Android, así como tener la versión adecuada de Java respecto al
 SDK anterior.
 
-De este modo, el SDK de Android utilizado es la versión 23.0.3, con una versión de Java 1.8.0_45
-(Java8).
+De este modo, el SDK de Android utilizado es la versión 23.0.3, utilizando Java 8 en su versión 1.8.0_45.
 
 Para la construcciónd del proyecto, tal y como es habitual en los proyectos *Android*, se ha utilizado
 **Gradle**, en su versión 3.3.
@@ -111,12 +113,12 @@ Para la construcciónd del proyecto, tal y como es habitual en los proyectos *An
 Por otro lado, en el desarrollo de la aplicación se ha utilizado una estructura de paquetes adecuada
 para realizar la separación lógica entre los diferentes componentes de la misma.
 
-A continuación se detallan los paquetes de la aplicación.
+A continuación se enumeran los paquetes de la aplicación.
 
 ### Actividades
 
-Representan la vista de las aplicaciones Android. Se encuentran bajo el paquete
-`es.mdelapenya.uned.master.is.ubicomp.sensors.activities`.
+Las clases que aquí se encuentran representan la vista de las aplicaciones Android. Se encuentran bajo
+el paquete `es.mdelapenya.uned.master.is.ubicomp.sensors.activities`.
 
 Una actividad es una única cosa que un usuario puede hacer. Casi todas las actividades interaccionan
 con el usuario, por tanto la clase Activity de Android se responsabiliza de crear una ventan en la
@@ -158,6 +160,12 @@ Actualizará la interfaz de usuario en cuanto se haya producido un cambio en la 
 velocidad haya cambiado. Para ello, la actividad dispone del siguiente método, que determina si tiene
 que actualizar la interfaz en los casos en que el estado anterior sea diferente del estado actual:
 
+    private TextView currentSpeed;
+    private TextView currentSpeedText;
+    private String oldSpeed = "0.00";
+    private String oldSpeedText = "";
+    ...
+    ...
     private void updateUI() {
         float speedKm = SpeedConverter.convertToKmsh(getSpeed());
 
@@ -174,6 +182,11 @@ que actualizar la interfaz en los casos en que el estado anterior sea diferente 
         oldSpeed = speedValue;
         oldSpeedText = rangeName;
     }
+
+Siendo `currentSpeed` y `currentSpeedText` dos componentes gráficos de Android representando etiquetas
+de presentación de datos, y `oldSpeed` y `oldSpeedText` el estado interno de la actividad, en el que
+cada vez que se detecte un cambio de posición se almacenerán los valores de la velocidad y el nombre
+del rango en el que se encuentra.
 
 El método `getRangeName(float)` determina si la velocidad actual se encuentra en alguno de los rangos
 existentes en la aplicación. Para ello, se iterará por los rangos, y se comprobará que la velocidad
@@ -264,8 +277,8 @@ dado.
 
 ### Persistencia
 
-Representan la capa de persistencia de la aplicación. Se encuentran bajo el paquete
-`es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db`.
+Las clases que aquí se encuentran representan la capa de persistencia de la aplicación. Se encuentran
+bajo el paquete `es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db`.
 
 Las clases que extiendan a la clase `SQLiteOpenHelper` se corresponden con clases de utilidad para
 manejar tanto la creación de una base de datos como el versionado de la misma.
@@ -313,9 +326,10 @@ para obtenerlos.
 
 ### Servicios
 
-Representan la capa de servicios de la aplicación. La interfaz del servicio se encuentra bajo el paquete
-`es.mdelapenya.uned.master.is.ubicomp.sensors.services`, y la implementación por defecto se encuentra
-en el paquete `es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services`.
+Las clases que aquí se encuentran representan la capa de servicios de la aplicación. La interfaz del
+servicio se encuentra bajo el paquete `es.mdelapenya.uned.master.is.ubicomp.sensors.services`, y la
+implementación por defecto se encuentra en el paquete
+`es.mdelapenya.uned.master.is.ubicomp.sensors.internal.services`.
 
 El único servicio que ofrece la aplicación, `CRUDService` es un servicio para encapsular las operaciones
 de acceso a datos, y en su interfaz define dichas operaciones.
@@ -344,7 +358,7 @@ modo que abstraiga la implementación de la base de datos, invocando siempre al 
 
 ### Modelos
 
-Representan el modelo de la aplicación. Se encuentran bajo el paquete
+Las clases que aquí se encuentran representan el modelo de la aplicación. Se encuentran bajo el paquete
 `es.mdelapenya.uned.master.is.ubicomp.sensors.model`.
 
 En este caso, la aplicación contiene únicamente un solo modelo, definido en la clase `Range`, que no
@@ -370,9 +384,7 @@ parámetros de entrada. Estos parámetros se corresponden con los valores anteri
 velocidad.
 
 El motivo principal de esta encapsulación es el de poder probar la funcionalidad definida en estas
-clases, de modo que se puedan escribir *tests unitarios* de las mismas. Estos tests no tendrán
-dependencias externas, o en su caso las simularían, por tanto son muy fáciles de ejecutar, siendo muy
-rápida su ejecución.
+clases, de modo que se puedan escribir *tests unitarios* de las mismas.
 
 ### Eventos
 
@@ -389,10 +401,10 @@ ubicación del GPS, tal y como se observa en el siguiente bloque de código:
         updateUI();
     }
 
-Tal y como comentamos al detallar las actividades de la aplicación, tenemos una clase base
-**BaseGeoLocatedActivity**. Esta clase es la responsable de encapsular el código necesario para acceder
-a los servicios de *Google Play Services*, y con ellos acceder a los servicios de localización. Cada
-vez que cambie la localización, se ejecutará su método `onLocationChanged(Location)`, que calculará
+Tal y como comentamos al detallar las actividades de la aplicación, la aplicación dispone de una clase
+base **BaseGeoLocatedActivity**. Esta clase es la responsable de encapsular el código necesario para
+acceder a los servicios de *Google Play Services*, y con ellos acceder a los servicios de localización.
+Cada vez que cambie la localización, se ejecutará su método `onLocationChanged(Location)`, que calculará
 la velocidad instantánea a partir de un cálculo con las coordenadas de la localización actual y la
 anterior conocida, y el tiempo transcurrido entre ambas mediciones.
 
@@ -471,6 +483,8 @@ todos los controles han sido extensamente probados, utilizando diferentes práct
 valores incorrectos, valores nulos en los campos, etc.
 
 ## Capturas
+
+A continuación se presentan capturas de las diferentes pantallas de la aplicación.
 
 ### Pantalla Principal
 
