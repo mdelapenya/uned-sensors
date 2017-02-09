@@ -595,4 +595,12 @@ será necesario construirla desde los fuentes. Para ello bastará con realizar l
 Donde `/sdcard` representa el almacenamiento interno del dispositivo Android. Para instalarlo será
 necesario habilitar la instalación de aplicaciones de fuentes desconocidas.
 
+## Integración con otros sistemas
+
+En el momento que estamos leyendo los datos del sensor GPS del dispositivo, podríamos en ese punto
+crear cualquier tipo de comunicación con un sistema de terceros para enviar dichos datos, mediante
+invocaciones a un servicio web, por ejemplo. Dicho servicio web podría recoger los datos de velocidad
+instantánea, datos de ubicación, identificador del dispositivo, entre otros, para poder clasificar
+ y/o agrupar los datos en otras operaciones de explotación de datos.
+
 ## Recursos
