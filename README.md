@@ -571,4 +571,28 @@ rango.
 
 ![Modificación de Rango](./static/screenshot_edit_range.png)
 
+## Instalación de la aplicación
+
+Para instalar la aplicación en un dispositivo Android, al no estar publicada en `Google Play` como app,
+será necesario construirla desde los fuentes. Para ello bastará con realizar los siguientes pasos:
+
+1) Bajar el código, en un directorio con permisos de escritura, teniendo `git` instalado:
+
+    git clone https://github.com/mdelapenya/uned-sensors.git
+
+2) Tener instalado Java:
+
+    java --version
+
+3) Ejecutar el proceso de construcción:
+
+    ./gradlew assemble
+
+4) Copiar el empaquetado al terminal, mediante terminal con `adb` o usando un interfaz gráfico.
+
+    adb push ./app/build/outputs/apk/app-debug.apk /sdcard
+
+Donde `/sdcard` representa el almacenamiento interno del dispositivo Android. Para instalarlo será
+necesario habilitar la instalación de aplicaciones de fuentes desconocidas.
+
 ## Recursos
