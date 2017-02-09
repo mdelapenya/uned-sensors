@@ -509,27 +509,65 @@ Se han realizado pruebas exploratorias (o `Exploratory Testing`) sobre la aplica
 todos los controles han sido extensamente probados, utilizando diferentes prácticas: valores límite,
 valores incorrectos, valores nulos en los campos, etc.
 
-## Capturas
+## Manual de Uso
 
-A continuación se presentan capturas de las diferentes pantallas de la aplicación.
+A continuación se presentan las diferentes pantallas de la aplicación, con la información necesaria
+para utilizar la aplicación con fluídez.
 
 ### Pantalla Principal
+
+Al abrir la aplicación se mostrará la actividad principal, que directamente mostrará dos etiquetas,
+la superior mostrando la velocidad en kilómetros por hora a la que se encuentra el dispositivo, y
+otra etiqueta inmediatamente debajo mostrando el nombre del rango de velocidad en el que se encuentra
+la velocidad actual.
 
 ![MainActivity](./static/screenshot_main.png)
 
 ### Pantalla de Administración de Rangos
 
+Pulsando en la barra de navegación de la aplicación, arriba a la izquierda, aparecerá el icono del
+menú, representado por tres puntos verticales. Una vez pulsado, desplegará las opciones del menú, que
+para la aplicación corresponden con la gestión de los rangos del sensor, así como una opción mostrando
+una ayuda de la aplicación.
+
 ![Configuración desde MainActivity](./static/screenshot_main_config.png)
 
 ### Pantalla de Lista de rangos
+
+Al pulsar en la opción "Rangos del Sensor" del menú, se mostrará la pantalla de gestión de rangos,
+formada por una lista con los rangos disponibles en la actualidad, así como una opción para añadir
+nuevos rangos. Esta opción de "Nuevo Rango" se encuentra ubicado abajo a la derecha, siguiendo los
+patrones de diseño de Google basados en `Material Design`. Pulsando sobre esta opción se accederá a
+la pantalla de creación de rango, que detallaremos más adelante.
+
+Pulsando sobre un elemento de la lista se accederá a la pantalla de edición de rango, que detallaremos
+más adelante.
+
+Para volver a la pantalla principal, en la barra de navegación aparece una flecha apuntando a la
+izquierda, representando la vuelta a la pantalla anterior del flujo.
 
 ![Lista de Rangos](./static/screenshot_range_list.png)
 
 ### Pantalla de Nuevo Rango
 
+Para crear un nuevo Rango podremos introducir tres valores: nombre del rango, valor mínimo del rango,
+en kilómetros por hora, y valor máximo del rango, también en kilómetros por hora.
+
+La aplicación validará que no existe otro rango con los valores mínimo o máximo iguales a los
+introducidos, por tanto no permitirá el solapamiento entre rangos, y una velocidad podrá pertenecer
+a un único rango.
+
 ![Nuevo Rango](./static/screenshot_new_range.png)
 
 ### Pantalla de Edición de Rango
+
+Para modificar un Rango podremos modificar alguno de los tres valores: nombre del rango, valor mínimo
+del rango, en kilómetros por hora, y valor máximo del rango, también en kilómetros por hora.
+
+Del mismo modo que en la pantalla de creación de rangos, la aplicación validará que no existe otro
+rango con los valores mínimo o máximo iguales a los introducidos, a excepción de tratarse del propio
+rango, por tanto no permitirá el solapamiento entre rangos, y una velocidad podrá pertenecer a un único
+rango.
 
 ![Modificación de Rango](./static/screenshot_edit_range.png)
 
