@@ -101,21 +101,48 @@ mejor experiencia de uso de la aplicación es conveniente utilizarla en exterior
 
 ## Desarrollo
 
+### Lenguaje de programación
+
 El proceso de desarrollo viene definido por el desarrollo de aplicaciones Android, por lo que es
 necesario la instalación de un SDK de Android, así como tener la versión adecuada de Java respecto al
 SDK anterior.
 
 De este modo, el SDK de Android utilizado es la versión 23.0.3, utilizando Java 8 en su versión 1.8.0_45.
 
-Para la construcciónd del proyecto, tal y como es habitual en los proyectos *Android*, se ha utilizado
+### Sistema de Build
+
+Para la construcción del proyecto, tal y como es habitual en los proyectos *Android*, se ha utilizado
 **Gradle**, en su versión 3.3.
+
+Gradle es un sistema de construcción especializado para el mundo de la máquina virtual Java (JVM).
+Gradle proporciona:
+
+* una herramienta de construcción de propóstio general y muy flexible, parecido a Apache Ant.
+* proporciona frameworks intercambiables, basados en construcción-por-convención, al estilo de Maven.
+* soporte de construcción de proyectos multi-proyecto muy potente.
+* gestión de dependencias muy potente, basado en Apache Ivy.
+* soporte completo para infraestructuras de repositorios Maven o Ivy existentes.
+* soporte para gestión de dependencias transitivas, sin la necesidad de repositorios remotos, o ficheros
+`pom.xml` o `ivy.xml`.
+* tareas Ant y construcciones tratadas como ciudadanos de primera clase.
+* scripts de construcción de `Groovy`.
+* un modelo de dominio muy rico para describir el sistema de construcción de cada proyecto.
+
+En el caso concreto de Android, para el proyecto no se utiliza nada fuera del estándar, basando el
+sistema de construcción en el *default* que ofrece el plugin de Android. Por ello, las tareas de
+construcción utilizadas son: `clean`, `assemble`, `test`.
+
+En cuanto a la gestión de dependencias, se utilizan tanto los repositorios de `jcenter` como la
+instalación local de Maven, ubicada en `$USER_HOME/.m2`.
+
+### Organización del código
 
 Por otro lado, en el desarrollo de la aplicación se ha utilizado una estructura de paquetes adecuada
 para realizar la separación lógica entre los diferentes componentes de la misma.
 
 A continuación se enumeran los paquetes de la aplicación.
 
-### Actividades
+#### Actividades
 
 Las clases que aquí se encuentran representan la vista de las aplicaciones Android. Se encuentran bajo
 el paquete `es.mdelapenya.uned.master.is.ubicomp.sensors.activities`.
@@ -139,7 +166,7 @@ momento, normalmente mediante un `ContentProvider` que mantenga el acceso a los 
 En el caso concreto de la aplicación, existen 4 actividades: BaseGeoLocatedActivity, MainActivity,
 RangeListActivity, RangeDetailActivity, que detallaremos a continuación.
 
-#### BaseGeoLocatedActivity
+##### BaseGeoLocatedActivity
 
 Esta actividad contiene el código responsable de responder a los eventos de localización, manteniendo
 en su estado interno la última localización conocida del dispositivo, y que comparará con la actual
@@ -151,7 +178,7 @@ los permisos que la aplicación necesita parara funcionar, como es el acceso a l
 de la aplicación, donde el usuario posiblemente no tenga el conocimiento suficiente para tomar una
 decisión acertada sobre la instalación de la misma, sino en el momento del primer uso del permiso.
 
-#### MainActivity
+##### MainActivity
 
 Esta actividad es la actividad principal de la aplicación. Extenderá la actividad anterior para acceder
 a las capacidades de localización, y las extenderá para actualizar la propia UI.
@@ -212,7 +239,7 @@ de ningún rango, devolverá como valor por defecto el valor de la clave *"PARAD
         return this.getString(R.string.status_stopped);
     }
 
-#### RangeListActivity
+##### RangeListActivity
 
 Esta actividad, invocada desde la actividad principal desde la barra de navegación, administrará las
 operaciones de creación, modificación y borrado de los rangos disponibles en la aplicación.
@@ -222,7 +249,7 @@ se podrá editar un rango existente simplement pulsando en la fila del rango, o 
 rango, mediante la acción de `swipe`, tanto a izquierdas como a derechas, sobre la fila que representa
 a un rango.
 
-#### RangeDetailActivity
+##### RangeDetailActivity
 
 Esta actividad, invocada desde la pulsación de un elemento en la fila de rangos, mostrará un formulario
 con todos los datos del rango seleccionado: nombre, valor mínimo y valor máximo del rango. Desde esta
@@ -275,7 +302,7 @@ dado.
 
 
 
-### Persistencia
+#### Persistencia
 
 Las clases que aquí se encuentran representan la capa de persistencia de la aplicación. Se encuentran
 bajo el paquete `es.mdelapenya.uned.master.is.ubicomp.sensors.internal.db`.
@@ -296,7 +323,7 @@ pequeña base de datos en memoria muy utilizada en desarrollos Android.
 * la definición de la estructura de las entidades a almacenar en la base de datos, en este caso el
 modelo de Rangos.
 
-#### Operaciones CRUD
+##### Operaciones CRUD
 
 Por otro lado, la clase `RangeDAO`, que sigue el patrón DAO (*Data Access Object*), y representa las
 operaciones de manipulación de datos al nivel de la base de datos. Estas operaciones serán, además de
@@ -311,7 +338,7 @@ realizadas a la base de datos.
         dbHelper.close();
     }
 
-#### Búsquedas
+##### Búsquedas
 
 Para implementar las búsquedas, se ha definido una interfaz `Criterion`, que siguiendo el patrón de
 desarrollo `Strategy`, permite al DAO definir una búsqueda u otra en función del criterio de utilizado.
@@ -324,7 +351,7 @@ mediante la capa de servicios, descrita a continuación. De esta manera los cons
 no necesitan conocer la implementación de la base de datos, sino que simplemente llaman a un servicio
 para obtenerlos.
 
-### Servicios
+#### Servicios
 
 Las clases que aquí se encuentran representan la capa de servicios de la aplicación. La interfaz del
 servicio se encuentra bajo el paquete `es.mdelapenya.uned.master.is.ubicomp.sensors.services`, y la
@@ -356,7 +383,7 @@ de modelo.
 La implementación, `RangeService`, invoca a la capa de persistencia en cada uno de sus métodos, de
 modo que abstraiga la implementación de la base de datos, invocando siempre al servicio en su lugar.
 
-### Modelos
+#### Modelos
 
 Las clases que aquí se encuentran representan el modelo de la aplicación. Se encuentran bajo el paquete
 `es.mdelapenya.uned.master.is.ubicomp.sensors.model`.
@@ -370,7 +397,7 @@ campos son:
 * min: valor mínimo del rango. Debe ser **único** entre todos los rangos.
 * max: valor máximo del rango. Debe ser **único** entre todos los rangos.
 
-### Clases de Utilidad
+#### Clases de Utilidad
 
 Con el mero fin de encapsular el código, bajo el paquete `es.mdelapenya.uned.master.is.ubicomp.sensors.util`
 se han creado varias clases de utilidad, que definen ciertas operacion de manera aislada.
@@ -386,7 +413,7 @@ velocidad.
 El motivo principal de esta encapsulación es el de poder probar la funcionalidad definida en estas
 clases, de modo que se puedan escribir *tests unitarios* de las mismas.
 
-### Eventos
+#### Eventos
 
 Para obtener la velocidad desde el GPS del dispositivo tendremos que suscribirnos a determinados
 eventos, de modo que cuando sean disparados, podemos realizar alguna acción.
