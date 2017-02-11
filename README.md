@@ -132,6 +132,10 @@ En el caso concreto de Android, para el proyecto no se utiliza nada fuera del es
 sistema de construcción en el *default* que ofrece el plugin de Android. Por ello, las tareas de
 construcción utilizadas son: `clean`, `assemble`, `test`.
 
+El diagrama de interacción entre las diferentes tareas de Gradle es el siguiente:
+
+![Diagrama de tareas de Gradle](./static/gradle_diagram.png)
+
 En cuanto a la gestión de dependencias, se utilizan tanto los repositorios de `jcenter` como la
 instalación local de Maven, ubicada en `$USER_HOME/.m2`.
 
