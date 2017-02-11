@@ -141,10 +141,29 @@ instalación local de Maven, ubicada en `$USER_HOME/.m2`.
 
 ### Organización del código
 
+Al utilizar Gradle como sistema de build, el proyecto sigue un `layout` específico determinado por la
+convención de nombres y directorios propia de Gradle.
+
+Según esta convención, la aplicación está dentro de un directorio `app`, y dentro de este directorio
+existirá un `src`, así como algunos ficheros descriptores, como por ejemplo el `build.gradle`. Dentro
+de `src` se sigue una estructura igual a la definida por `Maven`:
+
+* `src/main` para el descriptor principal de la aplicación Android, `AndroidManifest.xml`
+* `src/main/java` para el código de la aplicación
+* `src/main/res` para los recursos estáticos de la aplicación: layouts de Android, Strings, etc.
+* `src/main/test` para los tests unitarios
+* `src/main/testIntegration` para los tests de integración
+* `src/main/androidTest` para los tests de interfaz de usuario de Android
+
+En la siguiente imagen aparecen los elementos antes mencionados:
+
+![Estructura de proyecto en Gradle](./static/gradle_project_layout.png)
+
 Por otro lado, en el desarrollo de la aplicación se ha utilizado una estructura de paquetes adecuada
 para realizar la separación lógica entre los diferentes componentes de la misma.
 
-A continuación se enumeran los paquetes de la aplicación.
+A continuación se enumeran los paquetes de la aplicación, que como hemos mencionado antes, se ubican
+bajo el directorio `app/src/main/java` del proyecto.
 
 #### Actividades
 
