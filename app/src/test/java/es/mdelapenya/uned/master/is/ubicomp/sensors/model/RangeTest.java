@@ -72,10 +72,19 @@ public class RangeTest {
     public void testIsInRange() {
         Range r = new Range(1, 10, 1, "uno");
 
+        // speed smaller than min
         Assert.assertFalse(r.isInRange(0));
+
+        // speed is equals to min
         Assert.assertTrue(r.isInRange(1));
+
+        // speed is between max and min
         Assert.assertTrue(r.isInRange(4));
+
+        // speed is equals to max
         Assert.assertTrue(r.isInRange(10));
+
+        // speed is greater than max
         Assert.assertFalse(r.isInRange(100));
     }
 

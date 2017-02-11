@@ -498,6 +498,42 @@ Cuyo resultado será el siguiente:
     es.mdelapenya.uned.master.is.ubicomp.sensors.util.UIManagerTest > testSyncUIRequired PASSED
     es.mdelapenya.uned.master.is.ubicomp.sensors.util.UIManagerTest > testSyncUIRequiredWithDifferentSpeed PASSED
 
+#### Tests sobre el modelo
+
+La clase `RangeTest` recoge los tests unitarios sobre las operaciones con lógica de negocio de la clase
+`Range`. En particular los dos métodos en los que podrían producirse bugs o errores, puesto que los
+demás métodos de la clase son `getters` o `setters` de los atributos, siendo éstos populados en los
+constructores, evitando así que obtuvieran valores nulos.
+
+Para el método `compareTo`, resultado de implementar la clase `Comparable` de Java, se verifica que
+para todos los casos posibles se verifica que un objeto Range es mayor, menor o igual que otro. Este
+método `compareTo` es internamente llamado por `Collections.sort(list)` para realizar ordenaciones
+sobre una lista, en este caso de objetos `Range`.
+
+Para el método `isInRange`, se verifica que dada una velocidad en kilómetros, ésta está dentro o fuera
+(tanto por encima como por debajo) del rango definidido por las velocidades mínima y máxima que lo
+delimitan.
+
+Por último, al existir un constructor por defecto, se verifica que éste popula los atributos con los
+valores por defecto.
+
+#### Tests sobre las utilidades
+
+La clase `SpeedConverterTest` recoge los tests unitarios sobre las operaciones con lógica de negocio
+de la clase `SpeedConverter`. En particular del único método de la clase, `convertToKmsh`, que dada
+una velocidad en metros por segundo, obtiene su equivalente en kilómetros por hora. De este modo, los
+tests verifican que para una velocidad de 1 metro por segundo la equivalencia es de 3.6 kilómetros
+por hora, y que para un valor arbitrario como es 13 metros por segundo, la equivalencia es de 46.8
+kilómetros por hora. En ambos casos, al tratarse de valores con decimales, el API de `jUnit` obliga
+a definir un delta para determinar el margen de error producido por el cálculo de decimales.
+
+La clase `UIManagerTest` recoge los tests unitarios sobre las operaciones con lógica de negocio
+de la clase `UIManager`. En particular del único método de la clase, `syncUIRequired`, que dados unos
+valores de entrada, actuales y anteriores, para la velocidad y el nombre del rango, determina si es
+necesario actualizar la interfaz de usuario o UI. De este modo, los tests verifican que el método
+devuelve `true` si y sólo si alguno de los valores actuales es distinto a su contrapartida en los
+valores anteriores.
+
 ### Tests de integración
 
 Debido a la simplicidad de la aplicación, y de no poseer dependencias externas con las que integrarse,
