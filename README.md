@@ -210,6 +210,7 @@ Actualizará la interfaz de usuario en cuanto se haya producido un cambio en la 
 velocidad haya cambiado. Para ello, la actividad dispone del siguiente método, que determina si tiene
 que actualizar la interfaz en los casos en que el estado anterior sea diferente del estado actual:
 
+```java
     private TextView currentSpeed;
     private TextView currentSpeedText;
     private String oldSpeed = "0.00";
@@ -232,6 +233,7 @@ que actualizar la interfaz en los casos en que el estado anterior sea diferente 
         oldSpeed = speedValue;
         oldSpeedText = rangeName;
     }
+```
 
 Siendo `currentSpeed` y `currentSpeedText` dos componentes gráficos de Android representando etiquetas
 de presentación de datos, y `oldSpeed` y `oldSpeedText` el estado interno de la actividad, en el que
@@ -246,6 +248,7 @@ el nombre del rango, primero buscando entre los recursos de tipo String de la ap
 existiese, directamente el nombre del rango. Si, por otro lado, la velocidad no se encuentra dentro
 de ningún rango, devolverá como valor por defecto el valor de la clave *"PARADO"*.
 
+```java
     private String getRangeName(float currentSpeed) {
         for (Range range : ranges) {
             if (range.isInRange(currentSpeed)) {
@@ -261,6 +264,7 @@ de ningún rango, devolverá como valor por defecto el valor de la clave *"PARAD
 
         return this.getString(R.string.status_stopped);
     }
+```
 
 ##### RangeListActivity
 
@@ -283,6 +287,7 @@ En ambos casos existirá un proceso de validación, que comprobará que no exist
 mínimos o máximos duplicados, de modo que sólo pueda existir un rango con un valor mínimo o máximo
 dado.
 
+```java
     public boolean isValidationSuccess() {
         if ("".equals(range.getName())) {
             return false;
@@ -322,8 +327,7 @@ dado.
 
         return true;
     }
-
-
+```
 
 #### Persistencia
 
@@ -356,10 +360,12 @@ bloques *finally*, de modo que se permitan cerrar los recursos sin tener que rep
 cerrado cada vez que se utilice. En este caso de clase de acceso a datos, se cerrarán las conexiones
 realizadas a la base de datos.
 
+```java
     @Override
     public void close() {
         dbHelper.close();
     }
+```
 
 ##### Búsquedas
 
@@ -384,6 +390,7 @@ implementación por defecto se encuentra en el paquete
 El único servicio que ofrece la aplicación, `CRUDService` es un servicio para encapsular las operaciones
 de acceso a datos, y en su interfaz define dichas operaciones.
 
+```java
     public interface CRUDService<T> {
 
         T add(T t);
@@ -399,6 +406,7 @@ de acceso a datos, y en su interfaz define dichas operaciones.
         T update(T t);
 
     }
+```
 
 Se ha desarrollado con *Generics* de Java, lo cual permite reutilizar la interfaz con cualquier tipo
 de modelo.
@@ -444,12 +452,14 @@ eventos, de modo que cuando sean disparados, podemos realizar alguna acción.
 Para el caso que nos ocupa, la actividad **MainActivity** deberá suscribirse al evento de cambio de
 ubicación del GPS, tal y como se observa en el siguiente bloque de código:
 
+```java
     @Override
     public void onLocationChanged(Location location) {
         super.onLocationChanged(location);
 
         updateUI();
     }
+```
 
 Tal y como comentamos al detallar las actividades de la aplicación, la aplicación dispone de una clase
 base **BaseGeoLocatedActivity**. Esta clase es la responsable de encapsular el código necesario para
@@ -458,6 +468,7 @@ Cada vez que cambie la localización, se ejecutará su método `onLocationChange
 la velocidad instantánea a partir de un cálculo con las coordenadas de la localización actual y la
 anterior conocida, y el tiempo transcurrido entre ambas mediciones.
 
+```java
     @Override
     public void onLocationChanged(Location location) {
         Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(
@@ -481,6 +492,7 @@ anterior conocida, y el tiempo transcurrido entre ambas mediciones.
             lastLocation = currentLocation;
         }
     }
+```
 
 ## Pruebas
 
@@ -506,10 +518,13 @@ escritura y ejecución de tests.
 
 Para ejecutar los tests unitarios bastará con ejecutar desde el directorio raíz el comando:
 
+```shell
     ./gradlew test
+```
 
 Cuyo resultado será el siguiente:
 
+```shell
     es.mdelapenya.uned.master.is.ubicomp.sensors.model.RangeTest > testCompareThisGreaterThanThat PASSED
     es.mdelapenya.uned.master.is.ubicomp.sensors.model.RangeTest > testCompareThisLowerThanThat PASSED
     es.mdelapenya.uned.master.is.ubicomp.sensors.model.RangeTest > testCompareThisEqualsToThat PASSED
@@ -520,6 +535,7 @@ Cuyo resultado será el siguiente:
     es.mdelapenya.uned.master.is.ubicomp.sensors.util.UIManagerTest > testSyncUIRequiredWithDifferentIds PASSED
     es.mdelapenya.uned.master.is.ubicomp.sensors.util.UIManagerTest > testSyncUIRequired PASSED
     es.mdelapenya.uned.master.is.ubicomp.sensors.util.UIManagerTest > testSyncUIRequiredWithDifferentSpeed PASSED
+```
 
 #### Tests sobre el modelo
 
@@ -637,19 +653,27 @@ será necesario construirla desde los fuentes. Para ello bastará con realizar l
 
 1) Bajar el código, en un directorio con permisos de escritura, teniendo `git` instalado:
 
+```shell
     git clone https://github.com/mdelapenya/uned-sensors.git
+```
 
 2) Tener instalado Java:
 
+```shell
     java --version
+```
 
 3) Ejecutar el proceso de construcción:
 
+```shell
     ./gradlew assemble
+```
 
 4) Copiar el empaquetado al terminal, mediante terminal con `adb` o usando un interfaz gráfico.
 
+```shell
     adb push ./app/build/outputs/apk/app-debug.apk /sdcard
+```
 
 Donde `/sdcard` representa el almacenamiento interno del dispositivo Android. Para instalarlo será
 necesario habilitar la instalación de aplicaciones de fuentes desconocidas.
