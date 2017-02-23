@@ -19,6 +19,7 @@ package es.mdelapenya.uned.master.is.ubicomp.sensors.activities.location;
 import android.Manifest;
 import android.app.Dialog;
 
+import android.content.Context;
 import android.content.Intent;
 
 import android.content.pm.PackageManager;
@@ -31,6 +32,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import android.telephony.TelephonyManager;
+
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -39,6 +42,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+
+import java.util.UUID;
 
 /**
  * @author Manuel de la Peña
@@ -115,6 +120,10 @@ public class BaseGeoLocatedActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         initializeGooglePlayServices();
+
+        if (uniqueDeviceId == null) {
+            uniqueDeviceId = getUniqueDeviceId();
+        }
     }
 
     @Override
@@ -165,6 +174,21 @@ public class BaseGeoLocatedActivity extends AppCompatActivity
         }
     }
 
+    private String getUniqueDeviceId() {
+        TelephonyManager telephonyManager =
+            (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+
+        final String deviceId = telephonyManager.getDeviceId();
+        final String simSerialNumber = telephonyManager.getSimSerialNumber();
+        final String androidId = android.provider.Settings.Secure.getString(
+            getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+
+        UUID deviceUuid = new UUID(
+            androidId.hashCode(), ((long)deviceId.hashCode() << 32) | simSerialNumber.hashCode());
+
+        return deviceUuid.toString();
+    }
+
     private void initializeGooglePlayServices() {
         checkRuntimePermissions();
 
@@ -206,5 +230,6 @@ public class BaseGeoLocatedActivity extends AppCompatActivity
     private GoogleApiClient googleApiClient;
     private Location lastLocation;
     private float speed;
+    private String uniqueDeviceId;
 
 }
