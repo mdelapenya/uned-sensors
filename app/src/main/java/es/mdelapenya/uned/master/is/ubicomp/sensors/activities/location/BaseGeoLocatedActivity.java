@@ -30,7 +30,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 
 import android.telephony.TelephonyManager;
 
@@ -43,6 +42,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import es.mdelapenya.uned.master.is.ubicomp.sensors.activities.BaseAndroidBusRegistrableActivity;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.pojo.SensorMetric;
 
 import java.util.Date;
@@ -51,7 +51,7 @@ import java.util.UUID;
 /**
  * @author Manuel de la Peña
  */
-public class BaseGeoLocatedActivity extends AppCompatActivity
+public class BaseGeoLocatedActivity extends BaseAndroidBusRegistrableActivity
     implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
