@@ -96,8 +96,8 @@ public class BaseGeoLocatedActivity extends BaseAndroidBusRegistrableActivity
             lastLocation = currentLocation;
 
             SensorMetric metric = new SensorMetric(
-                uniqueDeviceId, currentLocation.getLatitude(), currentLocation.getLongitude(),
-                speed, "speed", "km/h", new Date().getTime());
+                uniqueDeviceId, "sensors-android", currentLocation.getLatitude(),
+                currentLocation.getLongitude(), speed, "speed", "km/h", new Date().getTime());
 
             SensorsInteractor sensorsInteractor = new SensorsMetricInteractor(metric);
 
