@@ -173,7 +173,7 @@ public class BaseGeoLocatedActivity extends AppCompatActivity
     private void checkRuntimePermissions() {
         String[] permissions = {
             Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.READ_PHONE_STATE
+            Manifest.permission.INTERNET, Manifest.permission.READ_PHONE_STATE
         };
 
         for (String permission : permissions) {
