@@ -18,7 +18,7 @@ package es.mdelapenya.uned.master.is.ubicomp.sensors.interactors;
 
 import java.io.IOException;
 
-import es.mdelapenya.uned.master.is.ubicomp.sensors.pojo.SensorMetric;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.pojo.Metric;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.services.SensorsService;
 
 import retrofit2.Call;
@@ -28,15 +28,15 @@ import retrofit2.Call;
  */
 public class SensorsMetricInteractor extends BaseSensorsInteractor {
 
-    public SensorsMetricInteractor(SensorMetric sensorMetric) {
-        this.sensorMetric = sensorMetric;
+    public SensorsMetricInteractor(Metric metric) {
+        this.metric = metric;
     }
 
     @Override
     protected Call<String> getResponse(SensorsService sensorsService) throws IOException {
-        return sensorsService.postMetric(sensorMetric);
+        return sensorsService.postMetric(metric);
     }
 
-    private SensorMetric sensorMetric;
+    private Metric metric;
 
 }

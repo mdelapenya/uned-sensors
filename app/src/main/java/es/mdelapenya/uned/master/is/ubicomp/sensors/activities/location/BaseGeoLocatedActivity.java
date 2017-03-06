@@ -45,6 +45,7 @@ import com.google.android.gms.location.LocationServices;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.activities.BaseAndroidBusRegistrableActivity;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.interactors.SensorsInteractor;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.interactors.SensorsMetricInteractor;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.pojo.Metric;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.pojo.SensorMetric;
 
 import java.util.Date;
@@ -95,7 +96,7 @@ public class BaseGeoLocatedActivity extends BaseAndroidBusRegistrableActivity
 
             lastLocation = currentLocation;
 
-            SensorMetric metric = new SensorMetric(
+            Metric metric = new SensorMetric(
                 uniqueDeviceId, "sensors-android", currentLocation.getLatitude(),
                 currentLocation.getLongitude(), speed, "speed", "km/h", new Date().getTime());
 
