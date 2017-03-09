@@ -18,6 +18,8 @@ package es.mdelapenya.uned.master.is.ubicomp.sensors.services;
 
 import es.mdelapenya.uned.master.is.ubicomp.sensors.pojo.Metric;
 
+import okhttp3.ResponseBody;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -28,6 +30,6 @@ import retrofit2.http.POST;
 public interface SensorsService {
 
     @POST("sensors")
-    Call<String> postMetric(@Body Metric sensorMetric);
+    Call<ResponseBody> postMetric(@Body Metric sensorMetric);
 
 }

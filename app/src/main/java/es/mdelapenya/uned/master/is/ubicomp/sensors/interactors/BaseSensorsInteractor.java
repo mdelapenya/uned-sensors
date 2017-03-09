@@ -21,6 +21,8 @@ import es.mdelapenya.uned.master.is.ubicomp.sensors.util.AndroidBus;
 
 import java.io.IOException;
 
+import okhttp3.ResponseBody;
+
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -45,9 +47,9 @@ public abstract class BaseSensorsInteractor implements SensorsInteractor {
 
             SensorsService sensorsService = retrofit.create(SensorsService.class);
 
-            Call<String> stringCall = getResponse(sensorsService);
+            Call<ResponseBody> stringCall = getResponse(sensorsService);
 
-            Response<String> response = stringCall.execute();
+            Response response = stringCall.execute();
 
             Object event = new Error(response.message());
 
@@ -62,7 +64,7 @@ public abstract class BaseSensorsInteractor implements SensorsInteractor {
         }
     }
 
-    protected abstract Call<String> getResponse(SensorsService sensorsService)
+    protected abstract Call<ResponseBody> getResponse(SensorsService sensorsService)
         throws IOException;
 
 }

@@ -21,6 +21,8 @@ import java.io.IOException;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.pojo.Metric;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.services.SensorsService;
 
+import okhttp3.ResponseBody;
+
 import retrofit2.Call;
 
 /**
@@ -33,7 +35,7 @@ public class SensorsMetricInteractor extends BaseSensorsInteractor {
     }
 
     @Override
-    protected Call<String> getResponse(SensorsService sensorsService) throws IOException {
+    protected Call<ResponseBody> getResponse(SensorsService sensorsService) throws IOException {
         return sensorsService.postMetric(metric);
     }
 
