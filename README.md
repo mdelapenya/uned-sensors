@@ -428,6 +428,59 @@ campos son:
 * min: valor mínimo del rango. Debe ser **único** entre todos los rangos.
 * max: valor máximo del rango. Debe ser **único** entre todos los rangos.
 
+#### Comunicación con la plataforma IoT
+
+Para la implementación de la comunicación con la plataforma IoT, se ha utilizado un modelo de programación
+asíncrona, de modo que no se bloquea el hilo principal de ejecución de Android. Para ello, el código
+se apoya en dos librerías de utilidad.
+
+Por un lado se utiliza [Retrofit](http://square.github.io/retrofit/) se utiliza para el envío de métricas
+a la plataforma IoT. Retrofit permite mapear un API HTTP a interfaces Java. Y por otro, para el paso
+de mensajes de manera asíncrona, se utiliza [Otto](http://square.github.io/otto/), que es un bus de
+eventos para desacoplar diferentes partes de la aplicación permitiendo al mismo tiempo que se comuniquen
+entre ellos de manera eficiente.
+
+En cuanto al código Java de implementación, se ha seguido un patrón `Interactor`, que es el responsable
+de implementar el patrón MVC (*Model-View-Controller*) en Android. El `Interactor` enviará datos desde
+la aplicación al servicio remoto.
+
+El interactor, que en su estado interno dispone de una métrica, utilizará `Retrofit` para invocar el
+servicio y realizar una petición `POST`, con los datos de dicha métrica.
+
+```java
+    private static final String BACKEND_ENDPOINT = "http://api.mdelapenya-sensors.wedeploy.io";
+
+    @Override
+    public void run() {
+        try {
+            Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BACKEND_ENDPOINT)
+                .addConverterFactory(JacksonConverterFactory.create())
+                .build();
+
+            SensorsService sensorsService = retrofit.create(SensorsService.class);
+
+            Call<String> stringCall = getResponse(sensorsService);
+
+            Response<String> response = stringCall.execute();
+
+            Object event = new Error(response.message());
+
+            if (response.isSuccessful()) {
+                event = response.body();
+            }
+
+            AndroidBus.getInstance().post(event);
+        }
+        catch (IOException e) {
+            AndroidBus.getInstance().post(e);
+        }
+    }
+```
+
+Para la comunicación en segundo plano, se ha implementado un Bus de mensajes en la clase `AndroidBus`,
+basada en la librería `Otto`.
+
 #### Clases de Utilidad
 
 Con el mero fin de encapsular el código, bajo el paquete `es.mdelapenya.uned.master.is.ubicomp.sensors.util`
@@ -468,6 +521,8 @@ Cada vez que cambie la localización, se ejecutará su método `onLocationChange
 la velocidad instantánea a partir de un cálculo con las coordenadas de la localización actual y la
 anterior conocida, y el tiempo transcurrido entre ambas mediciones.
 
+Una vez se haya actualizado la localización actual, se enviará una métrica a la plataforma IoT.
+
 ```java
     @Override
     public void onLocationChanged(Location location) {
@@ -490,9 +545,31 @@ anterior conocida, y el tiempo transcurrido entre ambas mediciones.
             this.speed = new Float(speed);
 
             lastLocation = currentLocation;
+
+            Metric metric = new SensorMetric(
+                uniqueDeviceId, "sensors-android", currentLocation.getLatitude(),
+                currentLocation.getLongitude(), speed, "speed", "km/h", new Date().getTime());
+
+            SensorsInteractor sensorsInteractor = new SensorsMetricInteractor(metric);
+
+            new Thread(sensorsInteractor).start();
         }
     }
 ```
+
+Como puede observarse, el envío de la métrica a la plataforma se realiza en otro hilo de ejecución.
+Previamente, se ha populado la métrica con los datos de interés:
+
+* el identificador del dispositivo, `uniqueDeviceId`,
+* el ID de la aplicación, `sensors-android`,
+* las coordenadas en formato latitud y longitud,
+* el valor de la métrica, almacenado en la variable `speed`,
+* el tipo de métrica, en formato texto, `"speed"`,
+* las unidades de la métrica, en formato texto, `"km/h"`, y
+* un timestamp de la petición
+
+Además, se ha creado un objeto de tipo `Interactor` con dicha métrica para ser utilizado en segundo
+plano.
 
 ## Pruebas
 
