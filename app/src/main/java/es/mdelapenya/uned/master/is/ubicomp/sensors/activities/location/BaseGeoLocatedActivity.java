@@ -47,6 +47,7 @@ import es.mdelapenya.uned.master.is.ubicomp.sensors.interactors.SensorsInteracto
 import es.mdelapenya.uned.master.is.ubicomp.sensors.interactors.SensorsMetricInteractor;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.pojo.Metric;
 import es.mdelapenya.uned.master.is.ubicomp.sensors.pojo.SensorMetric;
+import es.mdelapenya.uned.master.is.ubicomp.sensors.util.SpeedConverter;
 
 import java.util.Date;
 import java.util.UUID;
@@ -98,7 +99,8 @@ public class BaseGeoLocatedActivity extends BaseAndroidBusRegistrableActivity
 
             Metric metric = new SensorMetric(
                 uniqueDeviceId, "sensors-android", currentLocation.getLatitude(),
-                currentLocation.getLongitude(), speed, "speed", "km/h", new Date().getTime());
+                currentLocation.getLongitude(), SpeedConverter.convertToKmsh(this.speed), "speed",
+                "km/h", new Date().getTime());
 
             SensorsInteractor sensorsInteractor = new SensorsMetricInteractor(metric);
 
